@@ -8,3 +8,6 @@ research/*
 *.mp3
 *.wav
 __pycache__/
+sfx/*
+!sfx/README.md
+videos/

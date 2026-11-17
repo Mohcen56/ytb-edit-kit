@@ -25,12 +25,15 @@ If `brand/about_me/` is empty, run the `about-me` skill. If `brand/design.md` do
 | Write or fix a script | `script` |
 | Study a batch of reels or videos | `study` |
 | Why did this one video work | `video-breakdown` |
+| Edit a video | `edit` (engine: HyperFrames, kit in `tools/edit_kit/`) |
 
 ## Folders
 ```
 brand/        about_me/, design.md, design.json, hook_rubric.md, outro.txt (filled by the skills)
 research/     downloads, frames, notes (stays on your computer)
-tools/        yt.py, reel_fetch.py, thumbs.py, script_check.py, transcribe.py, tighten.py, captions.py
+tools/        yt.py, reel_fetch.py, thumbs.py, script_check.py, transcribe.py, tighten.py, captions.py, gif2mp4.py, edit_kit/
+videos/       one folder per video you edit (stays on your computer)
+sfx/          your own sound effects: click, whoosh, pop, ding, typing
 ```
 
 ## Tools

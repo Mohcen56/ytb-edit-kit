@@ -25,7 +25,7 @@ Go through these branches in order. Don't move on until each one is settled:
 7. **Thumbnails:** face or no face, how many words (3-5 max), same fonts or a separate thumbnail font.
 8. **Captions:** on or off, one line or two, word highlight or static, position (keep text above ~70% of the height so the YouTube progress bar never covers it).
 9. **Sound:** music yes or no, which sound effects (click, whoosh, pop, ding...), and the loudness rule (the voice is always on top, one effect at a time).
-10. **Pace:** how often something new appears on screen (for example every 2-3 s in tutorials, slower in stories).
+10. **Pace:** how often something new appears on screen (for example every 2-3 s in tutorials, slower in stories). Save the longest hold in seconds as `max_hold`.
 11. **Never list:** things they never want (for example flashing, glitch transitions, shaky cam, stock-photo people, more than one thing moving at once).
 12. **Formats:** which video types they make (tutorial, essay, list, talking head, reels) and whether any type gets its own look.
 
@@ -46,7 +46,8 @@ If an answer is vague, ask again with sharper options. If two answers fight (a "
   "caption_size": 56,
   "caption_position": "bottom",
   "sfx": ["click", "whoosh", "pop", "ding"],
-  "music": false
+  "music": false,
+  "max_hold": 4.5
 }
 ```
 The values above are placeholders: write the creator's own.
