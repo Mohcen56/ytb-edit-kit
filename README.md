@@ -26,6 +26,8 @@
 | **4** | **Render + self-check** | It renders with HyperFrames, then looks at its own frames and re-listens to the result before handing it over. |
 | **5** | **It learns** | Every note you give (*"no text on b-roll"*) is saved as a dated rule, so the next edit already follows it. |
 
+> **Already made your brand** (with another grill-me skill, a style guide, notes)? It finds it in your project and uses it. You won't be asked twice.
+>
 > **No design system yet?** It suggests building one first (about 10 minutes). Say no and it edits in a clean neutral look you can replace any time.
 
 ## ✦ What it can put on screen

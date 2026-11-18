@@ -1,11 +1,20 @@
 ---
 name: design-system
-description: Grill the creator until they have their own visual system for videos and thumbnails - colors, fonts, text style, captions, sound rules, editing pace and things they never do - then write it to brand/design.md and brand/design.json, which the other skills and tools read. Use on first setup, when the creator says "build my design system", "what should my videos look like", "pick my colors/fonts", or when another skill needs brand values and brand/design.md doesn't exist yet.
+description: Grill the creator until they have their own visual system for videos and thumbnails - colors, fonts, text style, captions, sound rules, editing pace and things they never do - then write it to brand/design.md and brand/design.json, which the other skills and tools read. If the creator already made a brand somewhere in the project (another grill-me skill, a style guide), it finds and imports it instead of asking again. Use on first setup, when the creator says "build my design system", "what should my videos look like", "pick my colors/fonts", or when another skill needs brand values and brand/design.md doesn't exist yet.
 ---
 
 # Design system builder (grill me)
 
 This repo ships with **no brand**. Every creator builds their own here. Never invent a style for them and never copy another creator's look: ask, show, and let them pick.
+
+## First: find a brand they already made
+Many creators already built a brand before installing this kit (with another grill-me skill, a style guide, a Canva brand kit, notes). **Never make them do it twice.** Before any question:
+1. If `brand/design.json` exists with the keys below, use it and stop here (unless they asked to change something).
+2. Otherwise search the whole project folder (skip `.git`, `node_modules`, `videos/`, `renders/`) for brand files: names containing `design`, `brand`, `style`, `theme` or `identity` (`.md`, `.json`, `.txt`, `.yaml`), plus `CLAUDE.md` / `GEMINI.md` / `AGENTS.md` sections about colours or fonts.
+3. If you find one, read it and tell the creator what you found in one message, for example: *"I found your design system in `my-brand/design.md`: charcoal background, gold accent, Montserrat Black titles, no music. I'll use it for your edits. OK?"*
+4. On yes: write `brand/design.json` with the kit's keys from it (copy their values exactly, never "improve" them), and copy or link the original as `brand/design.md` (keep their file where it is too). Then ask **only** about what the kit needs and their file doesn't say (usually the sound files in `sfx/`, `max_hold`, captions), one question at a time, best guess first.
+5. If two files disagree, show both values and ask which one wins.
+6. Found nothing? Run the full grill below.
 
 ## Before asking
 1. Read `brand/about_me/` (run `about-me` first if it's empty: the style must fit the person and the audience).

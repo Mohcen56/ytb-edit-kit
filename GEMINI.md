@@ -3,7 +3,7 @@
 Claude edits the creator's videos in code, in their own style. This file loads automatically.
 
 ## First run
-If `brand/design.md` doesn't exist, suggest `design-system` before the first edit (and `about-me` first if `brand/about_me/` is empty). If the creator says no, the edit uses the kit's neutral default look.
+If `brand/design.md` doesn't exist, look for a brand the creator already made elsewhere in the project and import it (see `design-system`). Found nothing? Suggest `design-system` before the first edit (and `about-me` first if `brand/about_me/` is empty). If the creator says no, the edit uses the kit's neutral default look.
 
 ## Always
 - Read `brand/design.md` before any visual or edit.
