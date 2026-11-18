@@ -8,7 +8,8 @@ description: Edit a long YouTube video (or a reel) in code from the creator's vo
 Engine: [HyperFrames](https://github.com/heygen-com/hyperframes) (HTML → MP4, run with `npx hyperframes`). The kit in `tools/edit_kit/` writes the HyperFrames project; you never hand-write the HTML. HyperFrames' own skills (`hyperframes`, `hyperframes-cli`, `hyperframes-registry`, `media-use`; install with `npx hyperframes skills update`) cover rendering, checks, ready-made blocks and media. With earshot installed, use it to pick sound effects and check the final mix.
 
 ## Before anything
-1. `brand/design.md` + `brand/design.json` must exist. If not, run the `design-system` skill first. Every colour and font comes from there.
+1. `brand/design.md` + `brand/design.json` must exist. If not, run the `design-system` skill first (`build.py` refuses to run without it). Every colour and font comes from there.
+   Check `sfx/` has a file for each sound in `design.json` → `sfx`; if some are missing, tell the creator before building (the edit would have no sound there).
 2. Read the script and ask what's unclear (which screen a line means, which file, what text). Never guess: ask with options.
 3. Gather the assets with the creator: screenshots and screen recordings of the real thing they talk about, b-roll, GIFs, logos. If a folder has nothing fitting, say what to search for or record. Only use files they have the rights to.
 

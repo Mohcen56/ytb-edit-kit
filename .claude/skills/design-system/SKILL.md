@@ -24,7 +24,10 @@ Go through these branches in order. Don't move on until each one is settled:
 6. **Big text style:** flat colour, gradient, outline, glow or shadow. Show each.
 7. **Thumbnails:** face or no face, how many words (3-5 max), same fonts or a separate thumbnail font.
 8. **Captions:** on or off, one line or two, word highlight or static, position (keep text above ~70% of the height so the YouTube progress bar never covers it).
-9. **Sound:** music yes or no, which sound effects (click, whoosh, pop, ding...), and the loudness rule (the voice is always on top, one effect at a time).
+9. **Sound:** music yes or no, which sound effects (click, whoosh, pop, ding, typing; optional error, hit, boom, scratch), and the loudness rule (the voice is always on top, one effect at a time). Then get the files in place, don't just note the choice:
+   - Ask them to put their own files in `sfx/`, named after each sound (`sfx/whoosh.wav`, `sfx/pop.mp3`...). Only sounds they have the rights to: free packs (Pixabay, Mixkit) or their own. Never download sounds for them without asking first.
+   - If earshot is installed, offer to listen to the candidates and pick the cleanest one per sound.
+   - List `sfx/` and say which chosen sounds are still missing. Don't move on until each one is there, or the creator says to skip it (then remove it from `sfx` in design.json).
 10. **Pace:** how often something new appears on screen (for example every 2-3 s in tutorials, slower in stories). Save the longest hold in seconds as `max_hold`.
 11. **Never list:** things they never want (for example flashing, glitch transitions, shaky cam, stock-photo people, more than one thing moving at once).
 12. **Formats:** which video types they make (tutorial, essay, list, talking head, reels) and whether any type gets its own look.
@@ -51,8 +54,9 @@ If an answer is vague, ask again with sharper options. If two answers fight (a "
 }
 ```
 The values above are placeholders: write the creator's own.
-3. Add a line to `CLAUDE.md`: "Brand: read brand/design.md before any visual, thumbnail or edit."
-4. Show a one-page style guide (HTML artifact): swatches, fonts, a sample thumbnail, a sample caption frame and the Never list.
+3. Check that every sound in `design.json` → `sfx` has its file in `sfx/`; name any that are missing.
+4. Add a line to `CLAUDE.md`: "Brand: read brand/design.md before any visual, thumbnail or edit."
+5. Show a one-page style guide (HTML artifact): swatches, fonts, a sample thumbnail, a sample caption frame and the Never list.
 
 ## Later changes
 When the creator locks a new rule, add it to `brand/design.md` with the date, update `design.json` if a value changed, and keep the old value in a "Changed" line so the history stays readable.

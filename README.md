@@ -48,7 +48,7 @@ and tell it to read `GEMINI.md` first.
 
 ## Try it
 
-**Editing a video:** add your own sound effects to `sfx/` (see [sfx/README.md](sfx/README.md)), then tell Claude *"edit this video"* with your voiceover. Or by hand:
+**Editing a video:** add your own sound effects to `sfx/` (see [sfx/README.md](sfx/README.md)), then tell Claude *"edit this video"* with your voiceover. Or by hand: (your design system must exist first: `build.py` stops without `brand/design.json`)
 ```bash
 python tools/edit_kit/new_video.py videos/my_video        # then put voice.mp3 in videos/my_video/audio/
 cd videos/my_video/audio && python ../../../tools/transcribe.py voice.mp3 && python ../../../tools/tighten.py && cd ../../..

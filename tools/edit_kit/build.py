@@ -12,7 +12,10 @@ S = importlib.import_module("shots"); sys.modules["shots"] = S
 SHOTS = S.SHOTS
 from theme import Theme
 TH = Theme(ROOT)
-if not TH.found: print("! no brand/design.json: using the kit's reference look. Run the design-system skill first.")
+if not TH.found and "--reference-look" not in sys.argv:
+    raise SystemExit("No brand/design.json yet, so there's no style to edit in.\n"
+                     "Open this folder in Claude Code (or Antigravity) and say: build my design system\n"
+                     "(to try the kit in its built-in reference look anyway: add --reference-look)")
 REPOS = getattr(S, "REPOS", [])            # map items: [(no, name, sub), ...] for the blurred map ("hub") and topic cards ("card")
 SKILLS = getattr(S, "SKILLS", []); KEEP = getattr(S, "KEEP", []); LOADS = getattr(S, "LOADS", [])
 HUBLABEL = getattr(S, "HUBLABEL", "")
@@ -613,6 +616,7 @@ for key, (nm, _, _) in VOL.items():
     if hit and hit.suffix.lower() in (".wav", ".mp3", ".ogg", ".m4a"): _sh.copy2(hit, P / "assets" / "sfx" / hit.name); HAVE[key] = hit.name
 SFX = [(a, ALIAS.get(n, n)) for a, n in SFX]
 miss = sorted({n for _, n in SFX if n not in HAVE})
+if not HAVE: print("  ! sfx/ has no sound files: this edit will have no sound effects (see sfx/README.md)")
 if miss: print("  ! no sound file in sfx/ for: " + ", ".join(VOL[n][0] if n in VOL else n for n in miss) + " (skipped)")
 last, sfx = -1, []
 for at, nm in sorted(SFX):
