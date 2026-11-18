@@ -36,7 +36,11 @@ It ships with **no brand**. The first thing it does is interview you and build *
 
 ## Setup (about 10 minutes)
 
-1. Install **Python 3.10+**, **FFmpeg**, **Node.js 20+** and **Claude Code** (or Antigravity). Node runs [HyperFrames](https://github.com/heygen-com/hyperframes), the free engine that renders the edits (`npx hyperframes`, nothing else to install).
+1. Install **Python 3.10+**, **FFmpeg**, **Node.js 20+** and **Claude Code** (or Antigravity). Node runs [HyperFrames](https://github.com/heygen-com/hyperframes), the free engine that renders the edits (`npx hyperframes`).
+   Then add HyperFrames' own skills (hyperframes, hyperframes-cli, hyperframes-registry and media-use come as one set):
+   ```bash
+   npx hyperframes skills update
+   ```
    - Windows: `winget install Gyan.FFmpeg` · Mac: `brew install ffmpeg`
 2. Get the repo and install the Python packages:
    ```bash
@@ -77,7 +81,7 @@ Only want captions for CapCut / Premiere / DaVinci? `python tools/captions.py wo
 
 ## Hear your sound (optional)
 
-Claude can't hear audio on its own. [earshot](https://github.com/Leonxlnx/earshot) by Leon Lin (MIT) gives it ears: it picks sound effects, checks your mix and lines sound up with cuts. Install it from its repo, add it to Claude Code as an MCP server, and copy its `skills/earshot` folder into `.claude/skills/`. The `video-breakdown` skill uses it when it's there.
+Claude can't hear audio on its own. [earshot](https://github.com/Leonxlnx/earshot) by Leon Lin (MIT) gives it ears: it picks sound effects, checks your mix and lines sound up with cuts. Install it from its repo, add it to Claude Code as an MCP server, and copy its `skills/earshot` folder into `.claude/skills/`. The `video-breakdown` and `edit` skills use it when it's there.
 
 ## Rules the skills follow
 - Your own words stay yours: Claude fixes grammar, never rewrites your lines without asking.

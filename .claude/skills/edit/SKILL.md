@@ -5,7 +5,7 @@ description: Edit a long YouTube video (or a reel) in code from the creator's vo
 
 # Edit a video
 
-Engine: [HyperFrames](https://github.com/heygen-com/hyperframes) (HTML → MP4, run with `npx hyperframes`). The kit in `tools/edit_kit/` writes the HyperFrames project; you never hand-write the HTML.
+Engine: [HyperFrames](https://github.com/heygen-com/hyperframes) (HTML → MP4, run with `npx hyperframes`). The kit in `tools/edit_kit/` writes the HyperFrames project; you never hand-write the HTML. HyperFrames' own skills (`hyperframes`, `hyperframes-cli`, `hyperframes-registry`, `media-use`; install with `npx hyperframes skills update`) cover rendering, checks, ready-made blocks and media. With earshot installed, use it to pick sound effects and check the final mix.
 
 ## Before anything
 1. `brand/design.md` + `brand/design.json` must exist. If not, run the `design-system` skill first. Every colour and font comes from there.
