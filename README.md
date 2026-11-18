@@ -1,10 +1,10 @@
-# youtube-edit-kit
+# ytb-edit-kit
 
 Skills and tools that let Claude Code (or Antigravity / Gemini) **edit your YouTube videos in code** from your voiceover: word screens, real website and app screens with markers, b-roll, GIFs, memes, versus cards, bars, gauges, flow and node diagrams, maps, re-created chats and terminals, all recoloured to your own style. It shows you a storyboard first, renders with HyperFrames, then checks its own work.
 
 It ships with **no brand**. The first thing it does is interview you and build *your* design system with you.
 
-Looking for research (transcripts, watching videos, channel analysis, scripts)? That's [youtube-research-skills](https://github.com/Mohcen56/youtube-research-skills).
+Looking for research (transcripts, watching videos, channel analysis, scripts)? That's [ytb-research-skills](https://github.com/Mohcen56/ytb-research-skills).
 
 ## What's inside
 
@@ -31,8 +31,8 @@ Looking for research (transcripts, watching videos, channel analysis, scripts)? 
    - Windows: `winget install Gyan.FFmpeg` · Mac: `brew install ffmpeg`
 2. Get the repo and install the Python packages:
    ```bash
-   git clone https://github.com/Mohcen56/youtube-edit-kit
-   cd youtube-edit-kit
+   git clone https://github.com/Mohcen56/ytb-edit-kit
+   cd ytb-edit-kit
    pip install -r requirements.txt
    ```
 3. Open the folder in Claude Code and say: **"run the about me interview"**, then **"build my design system"**.

@@ -10,7 +10,7 @@ This repo ships with **no brand**. Every creator builds their own here. Never in
 ## Before asking
 1. Read `brand/about_me/` (run `about-me` first if it's empty: the style must fit the person and the audience).
 2. If `brand/design.md` exists, show it and ask only about what they want to change.
-3. Ask for 2-5 references they love (videos, channels, thumbnails, websites). If they give links, look at them (with the `video-breakdown` skill from [youtube-research-skills](https://github.com/Mohcen56/youtube-research-skills) if it's installed) and say what each one does. References are ideas, never something to clone.
+3. Ask for 2-5 references they love (videos, channels, thumbnails, websites). If they give links, look at them (with the `video-breakdown` skill from [ytb-research-skills](https://github.com/Mohcen56/ytb-research-skills) if it's installed) and say what each one does. References are ideas, never something to clone.
 
 ## Grill, one question at a time
 Use AskUserQuestion. Each question has 2-4 concrete options with your recommendation first. **Show, don't describe** whenever it's visual: render a small preview (an inline widget or HTML artifact) of each option on a 16:9 frame and a thumbnail-size frame.
