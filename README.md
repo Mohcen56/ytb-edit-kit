@@ -26,11 +26,8 @@ Looking for research (transcripts, watching videos, channel analysis, scripts)? 
 
 ## Setup (about 10 minutes)
 
-1. Install **Python 3.10+**, **FFmpeg**, **Node.js 20+** and **Claude Code** (or Antigravity). Node runs [HyperFrames](https://github.com/heygen-com/hyperframes), the free engine that renders the edits (`npx hyperframes`).
-   Then add HyperFrames' own skills (hyperframes, hyperframes-cli, hyperframes-registry and media-use come as one set):
-   ```bash
-   npx hyperframes skills update
-   ```
+1. Install **Python 3.10+**, **FFmpeg** and **Claude Code** (or Antigravity).
+   Install **HyperFrames**, the free engine that renders the edits, from its source: [github.com/heygen-com/hyperframes](https://github.com/heygen-com/hyperframes). Follow its own setup (Node.js and its skills). This kit doesn't install it for you.
    - Windows: `winget install Gyan.FFmpeg` · Mac: `brew install ffmpeg`
 2. Get the repo and install the Python packages:
    ```bash
