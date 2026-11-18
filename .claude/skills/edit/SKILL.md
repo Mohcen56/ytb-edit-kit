@@ -1,6 +1,6 @@
 ---
 name: edit
-description: Edit a long YouTube video (or a reel) in code from the creator's voiceover - word screens, website and app screens with zooms and markers, b-roll, GIFs and memes, versus cards, graphs, flows, collages, maps, checklists and typed prompts - in their own design system, rendered with HyperFrames. Use when the creator says "edit this video", "make the edit", "build the video", or drops a voiceover and assets for a new video.
+description: Edit a long YouTube video (or a reel) in code from the creator's voiceover - word screens, website and app screens with markers, b-roll, GIFs and memes, versus cards, bars, gauges, flows, node diagrams, maps, re-created chats and terminals - in their own design system, rendered with HyperFrames. Use when the creator says "edit this video", "make the edit", "build the video", or drops a voiceover and assets for a new video.
 ---
 
 # Edit a video
@@ -41,13 +41,13 @@ Engine: [HyperFrames](https://github.com/heygen-com/hyperframes) (HTML → MP4, 
 - Captions under memes use the creator's words.
 
 **Explainers**
-- Never the same chart type in two shots in a row. Graphs: real numbers only.
-- Collage cards hold real logos or screenshots, never stock icons.
-- Maps: each level of a story gets its own layout (road for steps, hub for options).
+- Never the same chart type in two shots in a row. Bars and meters: real numbers only.
+- Diagrams show only what the line says; one idea per diagram.
+- Maps: the hub shows the whole video with the current item in focus; give other levels their own layout (flow, nodes).
 
 **Sound**
 - Follow the music rule in `brand/design.md`.
-- A sound only where something visibly changes, under the voice, one at a time, never stacked (the kit enforces a 0.35 s gap). Only the creator's own files in `sfx/`.
+- A sound only where something visibly changes, under the voice, one at a time, never stacked (the kit enforces a 0.35 s gap). Only the creator's own files in `sfx/` (names: click, whoosh, pop, ding, typing, error, hit, boom, scratch).
 
 **Never**
 - Flashy preset transitions (spins, glitches, star wipes), shaky cam, flashing, more than one animated element entering at once.

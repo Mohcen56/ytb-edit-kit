@@ -1,6 +1,6 @@
 # youtube-claude-skills
 
-Skills and tools that turn Claude Code (or Antigravity / Gemini) into a YouTube partner: it researches your niche, watches and breaks down other videos, writes scripts in your voice, grabs thumbnails, and **edits your videos in code**: word screens, website zooms with markers, b-roll, GIFs, memes, versus cards, graphs, collages, maps and more, all in your own style.
+Skills and tools that turn Claude Code (or Antigravity / Gemini) into a YouTube partner: it researches your niche, watches and breaks down other videos, writes scripts in your voice, grabs thumbnails, and **edits your videos in code**: word screens, real website and app screens with markers, b-roll, GIFs, memes, versus cards, bars, gauges, flow and node diagrams, maps, re-created chats and terminals, all recoloured to your own style.
 
 It ships with **no brand**. The first thing it does is interview you and build *your* design system with you.
 
