@@ -19,11 +19,16 @@ def _hex(c): return "#%02X%02X%02X" % tuple(max(0, min(255, round(x))) for x in 
 def _mix(a, b, k): return tuple(x + (y - x) * k for x, y in zip(a, b))
 def _lum(c): return (.2126 * c[0] + .7152 * c[1] + .0722 * c[2]) / 255
 
+# used when there's no brand/design.json yet: a clean neutral look (off-white page, near-black text, one blue accent)
+NEUTRAL = {"background": "#F6F6F4", "text": "#141414", "accent": "#2563EB",
+           "font_title": "Inter Black", "font_body": "Inter Bold", "font_mono": "JetBrains Mono"}
+
 class Theme:
     def __init__(self, root):
         f = pathlib.Path(root) / "brand" / "design.json"
         d = json.loads(f.read_text(encoding="utf8")) if f.exists() else {}
         self.found = bool(d)
+        if not d: d = NEUTRAL
         self.bg, self.ink, self.ac = _rgb(d.get("background", "#F5F4EE")), _rgb(d.get("text", "#1F1E1D")), _rgb(d.get("accent", "#F2C200"))
         self.light = _lum(self.bg) > .5
         self.font_title = d.get("font_title", "Montserrat Black")

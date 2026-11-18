@@ -12,10 +12,9 @@ S = importlib.import_module("shots"); sys.modules["shots"] = S
 SHOTS = S.SHOTS
 from theme import Theme
 TH = Theme(ROOT)
-if not TH.found and "--reference-look" not in sys.argv:
-    raise SystemExit("No brand/design.json yet, so there's no style to edit in.\n"
-                     "Open this folder in Claude Code (or Antigravity) and say: build my design system\n"
-                     "(to try the kit in its built-in reference look anyway: add --reference-look)")
+if not TH.found:
+    print("No brand/design.json yet: editing in the kit's neutral default look.\n"
+          "For your own colours, fonts and rules, say: build my design system (about 10 minutes).", file=sys.stderr)
 REPOS = getattr(S, "REPOS", [])            # map items: [(no, name, sub), ...] for the blurred map ("hub") and topic cards ("card")
 SKILLS = getattr(S, "SKILLS", []); KEEP = getattr(S, "KEEP", []); LOADS = getattr(S, "LOADS", [])
 HUBLABEL = getattr(S, "HUBLABEL", "")
@@ -578,6 +577,7 @@ for f in ((V / "assets").rglob("*") if (V / "assets").exists() else []):
     if f.is_file():
         dst = P / "assets" / f.relative_to(V / "assets")
         if not dst.exists() or dst.stat().st_mtime < f.stat().st_mtime: dst.parent.mkdir(parents=True, exist_ok=True); _sh.copy2(f, dst)
+(P / "assets").mkdir(parents=True, exist_ok=True)
 _sh.copy2(V / "audio" / VOICE, P / "assets" / VOICE)
 hosts = []
 for si, (ph, name) in enumerate(SECTIONS):

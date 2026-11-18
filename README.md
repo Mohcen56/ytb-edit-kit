@@ -1,51 +1,72 @@
-# ytb-edit-kit
+<p align="center">
+  <img src="assets/banner.png" alt="ytb-edit-kit: edit your videos in code" width="100%">
+</p>
 
-Skills and tools that let Claude Code (or Antigravity / Gemini) **edit your YouTube videos in code** from your voiceover: word screens, real website and app screens with markers, b-roll, GIFs, memes, versus cards, bars, gauges, flow and node diagrams, maps, re-created chats and terminals, all recoloured to your own style. It shows you a storyboard first, renders with HyperFrames, then checks its own work.
+<p align="center">
+  <img src="https://img.shields.io/badge/license-MIT-F2C200?style=flat-square&labelColor=16171B" alt="MIT license">
+  <img src="https://img.shields.io/badge/works%20with-Claude%20Code-F4F4F2?style=flat-square&labelColor=16171B" alt="Claude Code">
+  <img src="https://img.shields.io/badge/works%20with-Antigravity-F4F4F2?style=flat-square&labelColor=16171B" alt="Antigravity">
+  <img src="https://img.shields.io/badge/renders%20with-HyperFrames-F4F4F2?style=flat-square&labelColor=16171B" alt="HyperFrames">
+</p>
 
-It ships with **no brand**. The first thing it does is interview you and build *your* design system with you.
+<p align="center">
+  <b>Give it your voiceover. Get back a finished YouTube edit, in your own style.</b><br>
+  Skills and tools that let Claude Code or Antigravity edit your videos in code: real screens, b-roll, GIFs, charts, diagrams and sound effects, every one landing on the word you say.
+</p>
 
-Looking for research (transcripts, watching videos, channel analysis, scripts)? That's [ytb-research-skills](https://github.com/Mohcen56/ytb-research-skills).
+---
 
-## What's inside
+## ✦ How it works
 
-**Skills** (`.claude/skills/`)
-| Skill | What it does |
-|---|---|
-| `about-me` | Interviews you once so Claude always knows who you are, your goals, your audience and how you talk |
-| `design-system` | Grills you, with visual previews, until you have your own colours, fonts, captions, sound and editing rules |
-| `edit` | Edits your video from your voiceover: shows you a storyboard first, renders, then checks its own work |
+| | Step | What happens |
+|:-:|---|---|
+| **1** | **Your style** | Say *"build my design system"*. It asks you a few questions (colours, fonts, captions, sound, pace) and saves your answers. Every video after follows them. |
+| **2** | **Your voiceover** | Drop your take and your screenshots or clips in, and say *"edit this video"*. It times every word. |
+| **3** | **Storyboard first** | You get one still per shot before anything renders. Change what you don't like. |
+| **4** | **Render + self-check** | It renders with HyperFrames, then looks at its own frames and re-listens to the result before handing it over. |
+| **5** | **It learns** | Every note you give (*"no text on b-roll"*) is saved as a dated rule, so the next edit already follows it. |
 
-**Tools** (`tools/`)
-| Tool | What it does |
-|---|---|
-| `transcribe.py` | Word-by-word timing of your voiceover (local Whisper) |
-| `tighten.py` | Cuts long pauses and breaths out of your voiceover and evens the loudness |
-| `captions.py` | Makes `.srt` and styled `.ass` captions in your own colours and font |
-| `gif2mp4.py` | Turns a GIF into a clean video clip of a set length |
-| `edit_kit/` | The editing engine: `new_video.py`, `build.py`, `storyboard.py`, `final_check.py`, and every shot kind in [KINDS.md](tools/edit_kit/KINDS.md) |
+> **No design system yet?** It suggests building one first (about 10 minutes). Say no and it edits in a clean neutral look you can replace any time.
 
-## Setup (about 10 minutes)
+## ✦ What it can put on screen
 
-1. Install **Python 3.10+**, **FFmpeg** and **Claude Code** (or Antigravity).
-   Install **HyperFrames**, the free engine that renders the edits, from its source: [github.com/heygen-com/hyperframes](https://github.com/heygen-com/hyperframes). Follow its own setup (Node.js and its skills). This kit doesn't install it for you.
-   - Windows: `winget install Gyan.FFmpeg` · Mac: `brew install ffmpeg`
-2. Get the repo and install the Python packages:
-   ```bash
-   git clone https://github.com/Mohcen56/ytb-edit-kit
-   cd ytb-edit-kit
-   pip install -r requirements.txt
-   ```
-3. Open the folder in Claude Code and say: **"run the about me interview"**, then **"build my design system"**.
+Word screens · real website and app screens with markers · full-screen b-roll · GIFs and memes · versus cards · bars and gauges · flow and node diagrams · maps · re-created chats and terminals. All recoloured to your brand. See every shot type in [KINDS.md](tools/edit_kit/KINDS.md).
 
-**Antigravity / Gemini:** copy the skills to the folder it reads:
+## ✦ Install
+
+**1. Install these first**
+- **Python 3.10+** and **FFmpeg** (Windows: `winget install Gyan.FFmpeg` · Mac: `brew install ffmpeg`)
+- **Claude Code** or **Antigravity**
+- **HyperFrames**, the free engine that renders the edits, from its source: **[github.com/heygen-com/hyperframes](https://github.com/heygen-com/hyperframes)**. Follow its own setup. This kit doesn't install it for you.
+
+**2. Get the kit**
+```bash
+git clone https://github.com/Mohcen56/ytb-edit-kit
+cd ytb-edit-kit
+pip install -r requirements.txt
+```
+
+**3. Start**
+
+Open the folder in Claude Code and say:
+```
+build my design system
+```
+
+**Using Antigravity?** Copy the skills to the folder it reads, and tell it to read `GEMINI.md` first:
 ```bash
 cp -r .claude/skills .agents/skills
 ```
-and tell it to read `GEMINI.md` first.
 
-## Try it
+## ✦ Your first edit
 
-**Editing a video:** add your own sound effects to `sfx/` (see [sfx/README.md](sfx/README.md)), then tell Claude *"edit this video"* with your voiceover. Or by hand: (your design system must exist first: `build.py` stops without `brand/design.json`)
+1. Add your own sound effects to `sfx/` (names and tips in [sfx/README.md](sfx/README.md)).
+2. Say **"edit this video"** and give it your voiceover and your files.
+3. Check the storyboard, give notes, get your MP4.
+
+<details>
+<summary><b>Prefer running it by hand?</b></summary>
+
 ```bash
 python tools/edit_kit/new_video.py videos/my_video        # then put voice.mp3 in videos/my_video/audio/
 cd videos/my_video/audio && python ../../../tools/transcribe.py voice.mp3 && python ../../../tools/tighten.py && cd ../../..
@@ -53,16 +74,41 @@ python tools/edit_kit/build.py videos/my_video             # after writing video
 python tools/edit_kit/storyboard.py videos/my_video        # one still per shot, check before rendering
 cd videos/my_video/project && npx hyperframes render . -o ../renders/my_video_v01.mp4
 ```
-Only want captions for CapCut / Premiere / DaVinci? `python tools/captions.py words_tight.json captions` makes `.srt` + `.ass`.
+Only want captions for CapCut, Premiere or DaVinci? `python tools/captions.py words_tight.json captions` makes `.srt` + `.ass`.
+</details>
 
-## Hear your sound (optional)
+## ✦ What's inside
 
-Claude can't hear audio on its own. [earshot](https://github.com/Leonxlnx/earshot) by Leon Lin (MIT) gives it ears: it picks sound effects, checks your mix and lines sound up with cuts. Install it from its repo, add it to Claude Code as an MCP server, and copy its `skills/earshot` folder into `.claude/skills/`. The `edit` skill uses it to pick sound effects and check the final mix.
+**Skills** (`.claude/skills/`)
+| Skill | What it does |
+|---|---|
+| `design-system` | Asks you questions, with visual previews, until you have your own colours, fonts, captions, sound and editing rules |
+| `edit` | Edits your video from your voiceover: storyboard first, then render, then it checks its own work |
+| `about-me` | Interviews you once so Claude always knows who you are, your audience and how you talk |
 
-## Rules the skills follow
-- Your own words stay yours: Claude fixes grammar, never rewrites your lines without asking.
-- It asks when unsure instead of guessing.
-- Edits use only media you have the rights to: your recordings, your screenshots, free stock, your own sound effects.
+**Tools** (`tools/`)
+| Tool | What it does |
+|---|---|
+| `transcribe.py` | Word-by-word timing of your voiceover (local Whisper) |
+| `tighten.py` | Cuts long pauses and breaths, evens the loudness |
+| `captions.py` | `.srt` and styled `.ass` captions in your colours and font |
+| `gif2mp4.py` | Turns a GIF into a clean clip of a set length |
+| `edit_kit/` | The engine: `new_video.py`, `build.py`, `storyboard.py`, `final_check.py` |
 
-## License
-MIT, see [LICENSE](LICENSE).
+## ✦ Optional: let it hear
+
+Claude can't hear audio on its own. [earshot](https://github.com/Leonxlnx/earshot) by Leon Lin (MIT) gives it ears: it picks sound effects, checks your mix and lines sound up with cuts. Install it from its repo, add it as an MCP server, and copy its `skills/earshot` folder into `.claude/skills/`.
+
+## ✦ Rules it follows
+
+- **Your words stay yours.** On-screen text uses your exact script words.
+- **It asks instead of guessing** when a line, a file or a shot is unclear.
+- **Only media you have the rights to:** your recordings, your screenshots, free stock, your own sound effects.
+
+## ✦ Also free
+
+**[ytb-research-skills](https://github.com/Mohcen56/ytb-research-skills)**: drop a YouTube link and it fills your ideas table, breaks videos down, finds outliers in your niche and helps write your scripts.
+
+---
+
+<p align="center">MIT license · see <a href="LICENSE">LICENSE</a></p>

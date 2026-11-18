@@ -8,8 +8,11 @@ description: Edit a long YouTube video (or a reel) in code from the creator's vo
 Engine: [HyperFrames](https://github.com/heygen-com/hyperframes) (HTML → MP4, run with `npx hyperframes`). The kit in `tools/edit_kit/` writes the HyperFrames project; you never hand-write the HTML. HyperFrames and its own skills are installed by the creator from the source ([github.com/heygen-com/hyperframes](https://github.com/heygen-com/hyperframes)); this kit never installs them. If `npx hyperframes` or its skills are missing, stop and send the creator to that link. With earshot installed, use it to pick sound effects and check the final mix.
 
 ## Before anything
-1. `brand/design.md` + `brand/design.json` must exist. If not, run the `design-system` skill first (`build.py` refuses to run without it). Every colour and font comes from there.
-   Check `sfx/` has a file for each sound in `design.json` → `sfx`; if some are missing, tell the creator before building (the edit would have no sound there).
+1. **Design system check.** If `brand/design.json` doesn't exist, stop and suggest it before editing: *"You don't have a design system yet, so this edit would use the kit's neutral default look (off-white, black text, one blue accent). Want to build yours first? It takes about 10 minutes and every video after uses it."* Then:
+   - **Yes** → run the `design-system` skill, then come back to the edit.
+   - **No** → edit in the neutral default (`build.py` uses it automatically) and remind them once at the end that `build my design system` makes it theirs.
+   With a design system, every colour and font comes from it.
+   Check `sfx/` has a file for each sound the shots use; if some are missing, tell the creator before building (the edit would have no sound there).
 2. Read the script and ask what's unclear (which screen a line means, which file, what text). Never guess: ask with options.
 3. Gather the assets with the creator: screenshots and screen recordings of the real thing they talk about, b-roll, GIFs, logos. If a folder has nothing fitting, say what to search for or record. Only use files they have the rights to.
 
