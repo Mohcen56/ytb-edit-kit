@@ -354,6 +354,8 @@ def build(s, k, t0):
         js.append(f'tl.fromTo("#{I("c")}",{{y:50,opacity:0}},{{y:0,opacity:1,duration:.35,ease:"expo.out"}},{P(t)});')
         js.append(f'tl.fromTo("#{I("c")}",{{scale:.88}},{{scale:.92,duration:{d:.2f},ease:"none"}},{P(t)});')
     elif kind == "full":
+        # no text on b-roll (2026-11-18): captions and stamps on full clips are dropped
+        if s.get("cap") or s.get("stamp"): print(f"  ! text on b-roll dropped: {s['at']!r} (give the words their own shot)"); s.pop("cap", None); s.pop("stamp", None)
         # full-bleed clip for mood shots , no plate
         h = f'<div class="fullv" id="{I("c")}" style="position:absolute;inset:0;overflow:hidden">{vid(I("v"), s["src"], t0, t, d, s.get("mstart", 0), " style=\"position:absolute;inset:0;width:100%;height:100%;object-fit:cover\"")}</div>'
         js.append(f'tl.fromTo("#{I("c")}",{{opacity:0}},{{opacity:1,duration:.25,ease:"power1.out"}},{P(t)});')

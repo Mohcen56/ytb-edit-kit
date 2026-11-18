@@ -36,6 +36,7 @@ Engine: [HyperFrames](https://github.com/heygen-com/hyperframes) (HTML → MP4, 
 - Mix framed and full screen: framed when an action must read, full screen for mood.
 
 **B-roll, GIFs, memes**
+- No text on b-roll: full-screen b-roll plays clean, with no captions, stamps or labels on top. If a line needs words on screen, give it its own shot.
 - B-roll full screen unless the quality suffers. The same clip at most twice per video (another angle counts as new).
 - GIFs sit straight (no 3D tilt). Never stretch a short GIF to fill a slot: chain another one.
 - Captions under memes use the creator's words.

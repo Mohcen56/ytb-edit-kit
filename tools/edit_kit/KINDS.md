@@ -47,8 +47,8 @@ Options named `..._at`, and the last item of a tuple, are cue words inside that 
   `dict(at="so I opened", kind="screen", src="screens/site.mp4", label="site.com", mstart=2.0)`
   - `mark=(x, y, w, h), mark_at="pricing"` boxes the exact thing you name, one per screen.
   - Inside the window, x and y are measured on a 1728×884 area.
-- **full**: full-screen b-roll, with an optional caption in your exact words.
-  `dict(at="every morning", kind="full", src="broll/desk.mp4", cap="every morning", mstart=1.5)`
+- **full**: full-screen b-roll, always clean: no text on top (captions and stamps are ignored).
+  `dict(at="every morning", kind="full", src="broll/desk.mp4", mstart=1.5)`
 - **split**: before and after, side by side.
   `dict(at="your app instantly", kind="split", fit=True, left=dict(src="rec/before.mp4", tag="before"), right=dict(src="rec/after.mp4", tag="after"))`
 - **gif**: a framed GIF or meme, never stretched past its own length. Define it once in shots.py, then use it:
