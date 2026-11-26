@@ -63,5 +63,44 @@ class Theme:
 
     def font_link(self):
         fams = dict.fromkeys([self.family(self.font_title), self.family(self.font_body), self.family(self.font_mono)])
-        q = "&".join("family=" + f.replace(" ", "+") + ":wght@400;500;600;700;800;900" for f in fams)
-        return f'<link rel="stylesheet" href="https://fonts.googleapis.com/css2?{q}&display=block" />'
+        return "\n      ".join(f'<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family={f.replace(" ", "+")}&display=block" />' for f in fams)
+
+    def font_css(self, project_dir):
+        """Download Google Fonts .woff2 locally so HyperFrames renders deterministically and single-weight fonts never 400."""
+        import urllib.request
+        fams = list(dict.fromkeys([self.family(self.font_title), self.family(self.font_body), self.family(self.font_mono)]))
+        fdir = pathlib.Path(project_dir) / "assets" / "fonts"
+        fdir.mkdir(parents=True, exist_ok=True)
+        ua = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/120.0.0.0 Safari/537.36"
+        css_blocks, fallback_links = [], []
+        for fam in fams:
+            slug = fam.replace(" ", "+")
+            css_text = None
+            for suffix in (":wght@400;500;600;700;800;900", ":wght@400;700", ""):
+                url = f"https://fonts.googleapis.com/css2?family={slug}{suffix}&display=block"
+                try:
+                    req = urllib.request.Request(url, headers={"User-Agent": ua})
+                    with urllib.request.urlopen(req, timeout=6) as r:
+                        css_text = r.read().decode("utf8")
+                        break
+                except Exception:
+                    continue
+            if not css_text:
+                fallback_links.append(f'<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family={slug}&display=block" />')
+                continue
+            def _save_font(m):
+                u = m.group(1)
+                name = re.sub(r"[^a-zA-Z0-9._-]", "_", fam) + "_" + u.rsplit("/", 1)[-1]
+                dst = fdir / name
+                if not dst.exists():
+                    try:
+                        with urllib.request.urlopen(urllib.request.Request(u, headers={"User-Agent": ua}), timeout=8) as r:
+                            dst.write_bytes(r.read())
+                    except Exception:
+                        return m.group(0)
+                return f'url("assets/fonts/{name}")'
+            css_blocks.append(re.sub(r"url\((https://[^)]+)\)", _save_font, css_text))
+        out = "\n      ".join(fallback_links)
+        if css_blocks:
+            out += ("\n      " if out else "") + "<style>\n" + "\n".join(css_blocks) + "\n      </style>"
+        return out

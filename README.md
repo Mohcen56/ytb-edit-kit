@@ -5,13 +5,14 @@
 <p align="center">
   <img src="https://img.shields.io/badge/license-MIT-F2C200?style=flat-square&labelColor=16171B" alt="MIT license">
   <img src="https://img.shields.io/badge/works%20with-Claude%20Code-F4F4F2?style=flat-square&labelColor=16171B" alt="Claude Code">
+  <img src="https://img.shields.io/badge/works%20with-Codex-F4F4F2?style=flat-square&labelColor=16171B" alt="Codex">
   <img src="https://img.shields.io/badge/works%20with-Antigravity-F4F4F2?style=flat-square&labelColor=16171B" alt="Antigravity">
   <img src="https://img.shields.io/badge/renders%20with-HyperFrames-F4F4F2?style=flat-square&labelColor=16171B" alt="HyperFrames">
 </p>
 
 <p align="center">
   <b>Give it your voiceover. Get back a finished YouTube edit, in your own style.</b><br>
-  Skills and tools that let Claude Code or Antigravity edit your videos in code: real screens, b-roll, GIFs, charts, diagrams and sound effects, every one landing on the word you say.
+  Skills and tools that let Claude Code, Codex, or Antigravity edit your videos in code: real screens, b-roll, GIFs, charts, diagrams and sound effects, every one landing on the word you say.
 </p>
 
 ---
@@ -38,7 +39,7 @@ Word screens · real website and app screens with markers · full-screen b-roll 
 
 **1. Install these first**
 - **Python 3.10+** and **FFmpeg** (Windows: `winget install Gyan.FFmpeg` · Mac: `brew install ffmpeg`)
-- **Claude Code** or **Antigravity**
+- **Claude Code**, **Codex**, or **Antigravity**
 - **HyperFrames**, the free engine that renders the edits, from its source: **[github.com/heygen-com/hyperframes](https://github.com/heygen-com/hyperframes)**. Follow its own setup. This kit doesn't install it for you.
 
 **2. Get the kit**
@@ -50,14 +51,9 @@ pip install -r requirements.txt
 
 **3. Start**
 
-Open the folder in Claude Code and say:
+Open the folder in **Claude Code**, **Codex** (`AGENTS.md` + `.agents/skills/` are included), or **Antigravity** (tell it to read `GEMINI.md` first) and say:
 ```
 build my design system
-```
-
-**Using Antigravity?** Copy the skills to the folder it reads, and tell it to read `GEMINI.md` first:
-```bash
-cp -r .claude/skills .agents/skills
 ```
 
 ## ✦ Your first edit
@@ -81,10 +77,11 @@ Only want captions for CapCut, Premiere or DaVinci? `python tools/captions.py wo
 
 ## ✦ What's inside
 
-**Skills** (`.claude/skills/`)
+**Skills** (`.claude/skills/` and `.agents/skills/`)
 | Skill | What it does |
 |---|---|
 | `design-system` | Asks you questions, with visual previews, until you have your own colours, fonts, captions, sound and editing rules |
+| `script-and-audio` | Structures your script into visual beats and cuts/tightens your voiceover (with Whisper skipped-span checks) |
 | `edit` | Edits your video from your voiceover: storyboard first, then render, then it checks its own work |
 | `about-me` | Interviews you once so Claude always knows who you are, your audience and how you talk |
 

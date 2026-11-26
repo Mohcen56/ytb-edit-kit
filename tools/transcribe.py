@@ -14,4 +14,13 @@ for s in segs:
     ws = [{'w': w.word.strip(), 's': round(w.start, 3), 'e': round(w.end, 3)} for w in s.words if w.word.strip()]
     if ws: out.append({'start': ws[0]['s'], 'end': ws[-1]['e'], 'text': s.text.strip(), 'words': ws})
 json.dump(out, open('words.json', 'w', encoding='utf8'), indent=1)
-print(len(out), 'segments,', sum(len(s['words']) for s in out), 'words')
+dur = len(src) / 16000.0
+print(len(out), 'segments,', sum(len(s['words']) for s in out), f'words ({dur:.1f}s audio)')
+for a, b in zip(out, out[1:]):
+    gap = b['start'] - a['end']
+    if gap > 4.0:
+        print(f"  ! warning: {gap:.1f}s gap ({a['end']:.1f}s -> {b['start']:.1f}s) -- Whisper may have skipped speech; check audio and re-transcribe slice if needed")
+if not out:
+    print("  ! warning: 0 words transcribed")
+elif dur - out[-1]['end'] > 5.0:
+    print(f"  ! warning: transcript ends at {out[-1]['end']:.1f}s but audio is {dur:.1f}s -- Whisper may have skipped the end")

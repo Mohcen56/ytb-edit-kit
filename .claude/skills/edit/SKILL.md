@@ -23,18 +23,31 @@ Engine: [HyperFrames](https://github.com/heygen-com/hyperframes) (HTML → MP4, 
 4. `python tools/edit_kit/build.py videos/<name>`: read its warnings and fix them.
 5. **Beat plan first:** `python tools/edit_kit/storyboard.py videos/<name>` and show the creator `storyboard/storyboard.jpg` (one still per shot with its words). Wait for their go. Change shots they flag, rebuild, show again.
 6. Render: `cd videos/<name>/project && npx hyperframes check && npx hyperframes render . -o ../renders/<name>_v01.mp4`. Never overwrite a render: bump v02, v03.
-7. **Check the render yourself before showing it:** make a contact sheet of frames (ffmpeg, about one per second) and look at it, then run `python tools/edit_kit/final_check.py videos/<name> videos/<name>/renders/<name>_v01.mp4` (re-transcribes the render: no sound may hide a word; prints loudness). Fix, re-render, then hand it over with what changed.
+7. **Check the render yourself before showing it:**
+   - Run scene detection (`ffmpeg -i <render.mp4> -vf "select='gt(scene,0.25)',showinfo" -f null -`) vs your planned cuts so no unplanned cuts slip in.
+   - Grab frames `±0.06 s` at **every** cut and source-clip edge (not just a 1 fps contact sheet) to catch OBS/pop-ups, taskbars, browser chrome, or white frames.
+   - Grab a frame on **every** boxed text, labeled diagram, and highlight/marker to verify nothing overlaps, text fits centered in its box, and every highlight sits on its exact target.
+   - Run `python tools/edit_kit/final_check.py videos/<name> videos/<name>/renders/<name>_v01.mp4` (re-transcribes the render: no sound may hide a word; prints loudness). Fix, re-render, then hand it over with what changed.
 
 ## Default rules (the creator can change any of them in brand/design.md)
 **Pace and structure**
 - Something new on screen every 2-3 s. No dead time, no shot over ~4.5 s unless it's a screen recording that shows an action.
+- Show the first real result or payoff by ~0:15. Keep drawn explainer scenes short (under ~3 s) and hand over to real visuals or recordings.
+- Don't repeat the same block (e.g. text chips) line after line; vary per beat. No chip-only screens on an empty background.
 - A new beat in the voice gets a new visual. Reveals wait for the voice: every graphic lands on its word (the kit snaps to word onsets).
 - Visuals are literal: show the exact thing the line says (the real page, the real app, the real number). Only real names, dates and numbers on screen.
 - On-screen text uses the creator's exact script words, never a paraphrase. Big-word screens are rare (3-4 per video).
 - The hook shows the result or the problem in the first seconds. No intro card.
 
+**Layout and clean frames**
+- Nothing overlaps: no text, label, or icon may sit on top of or under another element (a node, line, card, cursor, or frame edge). Leave clear space around every label.
+- Text always fits its box, centered: every label, pill, button, and card holds its whole text with even padding. Size boxes from the text, never a fixed width that text can outgrow.
+- Keep text above the bottom 30% of the frame (`y <= 760` on 1920×1080) so the YouTube player bar never covers it.
+- Never show taskbars, OBS/Snipping Tool pop-ups, account choosers, emails, or bookmarks bars. Crop browser chrome off.
+
 **Screens**
 - Show whole windows, not tight crops. One smooth zoom in, hold, zoom out per shot, never slow drifting zooms.
+- No zoom unless it lands on the exact prompt, button, or text being said (and keep the whole target in frame).
 - Screenshots stay still unless a move is planned.
 - One marker per screen, only on the exact thing the line names.
 - Mix framed and full screen: framed when an action must read, full screen for mood.

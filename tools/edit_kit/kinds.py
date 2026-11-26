@@ -111,7 +111,7 @@ ICONS = {"terminal": "M3 5h18v14H3z M7 9l3 3-3 3 M12 15h5", "folder": "M3 6h6l2 
          "lock": "M6 11h12v10H6z M8 11V7a4 4 0 0 1 8 0v4", "mail": "M3 5h18v14H3z M3 6l9 7 9-7", "key": "M14 10a4 4 0 1 0-1 2.6L21 21 M17 17l2-2",
          "db": "M4 6c0-2 16-2 16 0v12c0 2-16 2-16 0z M4 6c0 2 16 2 16 0 M4 12c0 2 16 2 16 0", "alert": "M12 3L2 21h20z M12 10v5 M12 18h.01",
          "send": "M3 11l18-8-8 18-2-8z"}
-def icon(n, size, col="#F4F4F2"):
+def icon(n, size, col="#1F1E1D"):
     return f'<svg viewBox="0 0 24 24" width="{size}" height="{size}" fill="none" stroke="{col}" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="{ICONS[n]}"/></svg>'
 def vid(i, src, t0, start, dur, mstart=0.0, extra=""):
     return f'<video id="{i}" class="clip" src="assets/{src}" muted playsinline data-start="{start - t0:.3f}" data-duration="{dur:.3f}" data-media-start="{mstart:.2f}" data-track-index="2"{extra}></video>'

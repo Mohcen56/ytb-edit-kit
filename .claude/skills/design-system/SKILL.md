@@ -22,7 +22,7 @@ Many creators already built a brand before installing this kit (with another gri
 3. Ask for 2-5 references they love (videos, channels, thumbnails, websites). If they give links, look at them (with the `video-breakdown` skill from [ytb-research-skills](https://github.com/Mohcen56/ytb-research-skills) if it's installed) and say what each one does. References are ideas, never something to clone.
 
 ## Grill, one question at a time
-Use AskUserQuestion. Each question has 2-4 concrete options with your recommendation first. **Show, don't describe** whenever it's visual: render a small preview (an inline widget or HTML artifact) of each option on a 16:9 frame and a thumbnail-size frame.
+Ask one multiple-choice question at a time, with 2-4 concrete options and your recommendation first. **Show, don't describe** whenever it's visual: render a small preview (an inline widget or HTML artifact) of each option on a 16:9 frame and a thumbnail-size frame.
 
 Go through these branches in order. Don't move on until each one is settled:
 1. **Personality:** three words for how the channel should feel (calm, loud, nerdy, luxury, playful...). Everything after this must fit them.

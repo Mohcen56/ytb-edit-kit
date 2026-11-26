@@ -16,6 +16,7 @@ If `brand/design.md` doesn't exist, look for a brand the creator already made el
 |---|---|
 | Who I am, my goals, my voice | `about-me` |
 | My colours, fonts, captions, style | `design-system` |
+| Write/structure script & cut audio | `script-and-audio` |
 | Edit a video | `edit` (engine: HyperFrames, kit in `tools/edit_kit/`) |
 
 ## Folders
