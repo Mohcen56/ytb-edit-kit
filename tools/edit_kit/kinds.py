@@ -352,3 +352,367 @@ def k_gauge(s, t, e, d, I, W, P, R, fx, t0):
 
 NEW = {"gauge": k_gauge, "file": k_file, "ytwall": k_ytwall, "nodes": k_nodes, "meter": k_meter, "strike2": k_strike, "tries": k_tries, "prompts": k_pile,
        "chapter": k_chapter, "bars2": k_bars2}
+
+# --- Extended motion-graphics pack (all themed automatically by theme.py) ---
+import math as _math, random as _rnd
+
+_SW = 'fill="none" stroke="#1F1E1D" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"'
+_CUR = '<svg viewBox="0 0 24 24" width="60" height="60"><path d="M4 2 L4 20 L9 15.5 L12.5 22 L15.5 20.4 L12 14 L19 14 Z" fill="#FFFFFF" stroke="#1F1E1D" stroke-width="1.8" stroke-linejoin="round"/></svg>'
+_LINE_ICONS = {
+    "film": '<rect x="10" y="14" width="44" height="36" rx="4"/><path d="M10 24h44M10 40h44M20 14v10M32 14v10M44 14v10M20 40v10M32 40v10M44 40v10"/>',
+    "eye": '<path d="M6 32c8-12 18-18 26-18s18 6 26 18c-8 12-18 18-26 18S14 44 6 32z"/><circle cx="32" cy="32" r="8"/>',
+    "font": '<path d="M12 50L26 14l14 36M17 38h18"/><path d="M44 30c2-3 5-4 8-4 4 0 6 3 6 7v17M58 42c-3 6-14 8-15 1-1-6 9-7 15-6"/>',
+    "palette": '<path d="M32 8C18 8 8 18 8 30c0 12 10 20 20 20 4 0 5-3 3-6-2-4 1-7 5-7h6c8 0 14-5 14-12C56 15 45 8 32 8z"/><circle cx="20" cy="26" r="3"/><circle cx="30" cy="18" r="3"/><circle cx="42" cy="20" r="3"/>',
+    "curve": '<path d="M8 54C24 54 24 10 56 10"/><circle cx="56" cy="10" r="3"/><path d="M8 8v46h48"/>',
+    "cc": '<rect x="6" y="14" width="52" height="36" rx="6"/><path d="M28 26c-2-3-10-3-10 6s8 9 10 6M44 26c-2-3-10-3-10 6s8 9 10 6"/>',
+    "wave": '<path d="M6 32h6l4-12 6 26 6-34 6 40 6-28 6 14 4-6h8"/>',
+    "file": '<path d="M16 6h22l12 12v40H16z"/><path d="M38 6v12h12M22 30h20M22 38h20M22 46h14"/>',
+    "brain": '<path d="M24 12c-6 0-10 5-9 10-5 2-6 9-2 12-3 4 0 10 5 11 1 5 7 8 12 5V14c-1-1-3-2-6-2zM40 12c6 0 10 5 9 10 5 2 6 9 2 12 3 4 0 10-5 11-1 5-7 8-12 5"/>',
+    "doc": '<rect x="14" y="8" width="36" height="48" rx="4"/><path d="M22 20h20M22 28h20M22 36h20M22 44h12"/>',
+    "list": '<path d="M24 16h30M24 32h30M24 48h30"/><circle cx="12" cy="16" r="3"/><circle cx="12" cy="32" r="3"/><circle cx="12" cy="48" r="3"/>',
+    "image": '<rect x="8" y="12" width="48" height="40" rx="4"/><circle cx="22" cy="25" r="5"/><path d="M8 46l14-12 10 8 10-10 14 14"/>',
+    "play": '<rect x="6" y="12" width="52" height="40" rx="8"/><path d="M27 23v18l15-9z"/>',
+    "user": '<circle cx="32" cy="20" r="10"/><path d="M12 56c2-12 10-18 20-18s18 6 20 18"/>',
+    "wand": '<path d="M10 54L42 22M38 18l8 8"/><path d="M48 6v8M44 10h8M54 26v6M51 29h6M26 8v6M23 11h6"/>',
+    "grid": '<rect x="8" y="8" width="48" height="48"/><path d="M24 8v48M40 8v48M8 24h48M8 40h48"/>',
+    "clock": '<circle cx="32" cy="34" r="22"/><path d="M32 34V20M32 34l10 6M26 6h12M32 6v6"/>',
+    "camera": '<rect x="6" y="18" width="38" height="30" rx="5"/><path d="M44 28l14-8v26l-14-8"/>',
+    "folder": '<path d="M6 16h18l6 6h28v30H6z"/>',
+    "search": '<circle cx="26" cy="26" r="16"/><path d="M38 38l18 18"/>',
+    "chat": '<path d="M8 12h48v30H26l-12 10V42H8z"/>',
+    "check": '<path d="M12 34l12 12 28-28"/>',
+    "x": '<path d="M14 14l36 36M50 14L14 50"/>',
+    "dollar": '<path d="M32 6v52M44 18c-2-4-7-6-12-6-7 0-12 4-12 9 0 12 24 7 24 20 0 5-5 9-12 9-6 0-10-2-12-6"/>',
+    "code": '<path d="M22 18L8 32l14 14M42 18l14 14-14 14M36 12l-8 40"/>',
+    "card": '<rect x="6" y="10" width="52" height="44" rx="6"/><path d="M14 22h22M14 32h36M14 42h28"/>',
+    "lock": '<rect x="12" y="28" width="40" height="28" rx="4"/><path d="M20 28v-8a12 12 0 0124 0v8"/>',
+    "heart": '<path d="M32 54S8 40 8 24c0-8 6-14 13-14 5 0 9 3 11 7 2-4 6-7 11-7 7 0 13 6 13 14 0 16-24 30-24 30z"/>',
+}
+
+def _rough(pts, seed=1, j=3.0):
+    r = _rnd.Random(seed); P = [(x + r.uniform(-j, j), y + r.uniform(-j, j)) for x, y in pts]
+    d = f"M{P[0][0]:.1f} {P[0][1]:.1f}"
+    for a, b in zip(P[1:], P[2:] + [None]):
+        if b is None: d += f" L{a[0]:.1f} {a[1]:.1f}"
+        else: d += f" Q{a[0]:.1f} {a[1]:.1f} {(a[0] + b[0]) / 2:.1f} {(a[1] + b[1]) / 2:.1f}"
+    return d
+
+def _rarrow(x1, y1, x2, y2, seed=1, bend=40):
+    mx, my = (x1 + x2) / 2, (y1 + y2) / 2; dx, dy = x2 - x1, y2 - y1; L = _math.hypot(dx, dy) or 1
+    cx, cy = mx - dy / L * bend, my + dx / L * bend
+    pts = [(x1 + (cx - x1) * t * 2 if t < .5 else cx + (x2 - cx) * (t - .5) * 2, y1 + (cy - y1) * t * 2 if t < .5 else cy + (y2 - cy) * (t - .5) * 2) for t in (0, .25, .5, .75, 1)]
+    ang = _math.atan2(y2 - pts[-2][1], x2 - pts[-2][0]); h = 22
+    head = _rough([(x2 - h * _math.cos(ang - .5), y2 - h * _math.sin(ang - .5)), (x2, y2), (x2 - h * _math.cos(ang + .5), y2 - h * _math.sin(ang + .5))], seed + 7, 1.2)
+    return _rough(pts, seed, 2.5), head
+
+def _line_icon(name, iid, size=96):
+    return f'<svg class="ico" id="{iid}" viewBox="0 0 64 64" width="{size}" height="{size}"><g {_SW}>{_LINE_ICONS.get(name, _LINE_ICONS["card"])}</g></svg>'
+
+def _draw_on(js, P, sel, at, dur=.6):
+    js.append(f'gsap.set("{sel} path, {sel} rect, {sel} circle",{{strokeDasharray:400,strokeDashoffset:400}});tl.to("{sel} path, {sel} rect, {sel} circle",{{strokeDashoffset:0,duration:{dur},ease:"power1.inOut",stagger:.04}},{P(at)});')
+
+KIT_CSS += r'''
+.ico { display: block; }
+.pth { position: absolute; left: 0; top: 0; }
+.pnode { position: absolute; width: 46px; height: 46px; margin: -23px 0 0 -23px; border-radius: 50%; background: #FFFFFF; border: 5px solid #CFCBC0; box-shadow: 0 6px 18px rgba(31,30,29,.12); display: flex; align-items: center; justify-content: center; font: 900 22px "Montserrat"; color: #FFFFFF; }
+.pfg { position: absolute; inset: -5px; border-radius: 50%; background: linear-gradient(180deg, #EDE62A, #E8B000); display: flex; align-items: center; justify-content: center; font: 900 22px "Montserrat"; color: #1F1E1D; }
+.pnode.cur { border-color: #E8B000; }
+.plab { position: absolute; width: 300px; margin-left: -150px; text-align: center; font: 700 30px/1.15 "Montserrat"; color: #73726C; }
+.plab b { display: block; font: 600 20px "JetBrains Mono", monospace; color: #B98500; margin-bottom: 6px; }
+.plab.cur { color: #1F1E1D; font-weight: 900; }
+.pcover { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; background: #F5F4EE; transform-origin: 100% 50%; }
+.pthumb { position: absolute; width: 240px; height: 135px; margin-left: -120px; border: 6px solid #FFFFFF; border-radius: 10px; overflow: hidden; box-shadow: 0 14px 34px rgba(31,30,29,.2); opacity: 0; }
+.pthumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.cards { position: absolute; left: 0; right: 0; display: flex; justify-content: center; align-items: flex-start; gap: 34px; }
+.pc2 { position: relative; width: 300px; min-height: 330px; background: #FFFFFF; border-radius: 18px; padding: 34px 22px 26px; box-shadow: 0 22px 50px rgba(31,30,29,.14), 0 0 0 1px rgba(31,30,29,.05); display: flex; flex-direction: column; align-items: center; text-align: center; opacity: 0; }
+.pc2.sm { width: 210px; min-height: 250px; padding: 26px 14px 20px; }
+.pc2 .ct { font: 800 34px/1.15 "Montserrat"; color: #1F1E1D; margin-top: 22px; }
+.pc2.sm .ct { font-size: 28px; margin-top: 16px; }
+.pc2 .cs { font: 600 24px/1.3 "Montserrat"; color: #73726C; margin-top: 10px; }
+.pc2 .cs.m { font: 600 22px "JetBrains Mono", monospace; }
+.pc2 .stamp { position: absolute; left: 50%; top: 50%; width: 120px; height: 120px; margin: -60px 0 0 -60px; opacity: 0; }
+.pc2 .badge { position: absolute; right: -14px; top: -14px; width: 52px; height: 52px; border-radius: 50%; background: linear-gradient(180deg, #EDE62A, #E8B000); display: flex; align-items: center; justify-content: center; font: 900 28px "Montserrat"; color: #1F1E1D; opacity: 0; box-shadow: 0 8px 20px rgba(232,176,0,.35); }
+.ctitle { position: absolute; left: 0; right: 0; text-align: center; font: 900 68px "Montserrat"; text-transform: uppercase; letter-spacing: -.02em; color: #1F1E1D; opacity: 0; }
+.carr { position: absolute; left: 0; top: 0; overflow: visible; }
+.rcpt { position: absolute; left: 610px; top: 120px; width: 700px; background: #FFFFFF; padding: 50px 56px 60px; box-shadow: 0 30px 70px rgba(31,30,29,.18); font: 600 34px "JetBrains Mono", monospace; color: #1F1E1D; }
+.rcpt::after { content: ""; position: absolute; left: 0; right: 0; bottom: -18px; height: 18px; background: radial-gradient(circle at 12px -2px, transparent 12px, #FFFFFF 13px) repeat-x; background-size: 24px 18px; }
+.rcpt h4 { margin: 0 0 30px; font: 900 40px "Montserrat"; text-transform: uppercase; letter-spacing: .04em; text-align: center; }
+.rl { display: flex; justify-content: space-between; padding: 14px 0; border-bottom: 2px dashed #E3DFD4; opacity: 0; }
+.rl b { color: #B98500; }
+.rtot { display: flex; justify-content: space-between; margin-top: 26px; font: 900 48px "Montserrat"; opacity: 0; }
+.rstamp { position: absolute; right: -60px; bottom: 30px; padding: 10px 30px; border: 8px solid #E8B000; border-radius: 14px; font: 900 90px "Montserrat"; color: #E8B000; transform: rotate(-12deg); opacity: 0; background: rgba(255,255,255,.85); }
+.wlogo { position: absolute; width: 240px; height: 240px; border-radius: 40px; background: #FFFFFF; box-shadow: 0 24px 60px rgba(31,30,29,.16), 0 0 0 1px rgba(31,30,29,.05); display: flex; align-items: center; justify-content: center; opacity: 0; font: 900 40px "Montserrat"; color: #1F1E1D; text-align: center; padding: 20px; }
+.wlogo img { width: 140px; height: 140px; object-fit: contain; display: block; }
+.lgcap { position: absolute; width: 360px; margin-left: -60px; text-align: center; font: 800 32px "Montserrat"; color: #1F1E1D; opacity: 0; }
+.wbox { position: absolute; padding: 30px 46px; background: #1F1E1D; color: #F5F4EE; border-radius: 22px; font: 900 48px "Montserrat"; text-transform: uppercase; opacity: 0; box-shadow: 0 24px 60px rgba(31,30,29,.25); white-space: nowrap; }
+.wmeter { position: absolute; width: 620px; opacity: 0; }
+.wmeter .mt { font: 700 30px "Montserrat"; color: #73726C; margin-bottom: 14px; }
+.wmeter .tr { height: 48px; border-radius: 24px; background: #E3DFD4; overflow: hidden; }
+.wmeter .fl { height: 100%; width: 100%; border-radius: 24px; background: #4ADE80; transform-origin: 0 50%; transform: scaleX(0); }
+.qmark { position: absolute; font: 900 160px "Montserrat"; color: #E8B000; opacity: 0; }
+.wfold { position: absolute; width: 380px; padding: 24px 28px; background: #FFFFFF; border-radius: 18px; box-shadow: 0 22px 50px rgba(31,30,29,.16); display: flex; align-items: center; gap: 20px; font: 600 30px "JetBrains Mono", monospace; color: #1F1E1D; opacity: 0; }
+.trk { position: absolute; left: 240px; width: 1440px; height: 96px; }
+.trk .tn { position: absolute; left: 0; top: 30px; width: 220px; font: 700 30px "Montserrat"; color: #1F1E1D; }
+.trk .tline { position: absolute; left: 240px; right: 0; top: 46px; height: 4px; background: #CFCBC0; border-radius: 2px; }
+.kf { position: absolute; top: 30px; width: 36px; height: 36px; margin-left: -18px; transform: rotate(45deg); background: #1F1E1D; border-radius: 5px; opacity: 0; }
+.kf.g { background: linear-gradient(180deg, #EDE62A, #E8B000); }
+.kfl { position: absolute; top: -8px; font: 600 22px "JetBrains Mono", monospace; color: #73726C; margin-left: -40px; width: 120px; text-align: center; opacity: 0; }
+.phead { position: absolute; top: 230px; width: 4px; height: 560px; background: #E5484D; border-radius: 2px; }
+.fstrip { position: absolute; top: 400px; width: 220px; height: 124px; border-radius: 10px; background: #FFFFFF; border: 4px solid #1F1E1D; box-shadow: 0 14px 30px rgba(31,30,29,.14); opacity: 0; font: 600 22px "JetBrains Mono", monospace; display: flex; align-items: center; justify-content: center; color: #73726C; }
+.mp4 { position: absolute; left: 1420px; top: 330px; width: 260px; height: 300px; opacity: 0; }
+.cmp { position: absolute; top: 200px; width: 760px; background: #FFFFFF; border-radius: 26px; padding: 40px 50px 46px; box-shadow: 0 30px 80px rgba(31,30,29,.16); opacity: 0; }
+.cmp .ch { display: flex; align-items: center; gap: 24px; font: 900 44px "Montserrat"; text-transform: uppercase; color: #1F1E1D; margin-bottom: 26px; }
+.cmp .ch img { width: 70px; height: 70px; object-fit: contain; }
+.cmp .cr { display: flex; align-items: center; gap: 18px; font: 700 38px "Montserrat"; color: #1F1E1D; padding: 14px 0; opacity: 0; }
+.cmp .cr span { color: #E8B000; font-weight: 900; }
+.ui2 { position: absolute; left: 0; right: 0; top: 430px; display: flex; justify-content: center; gap: 46px; }
+.ubtn { position: relative; height: 120px; padding: 0 56px; border-radius: 60px; display: flex; align-items: center; gap: 20px; font: 900 48px "Montserrat"; background: #FFFFFF; color: #1F1E1D; box-shadow: 0 18px 40px rgba(31,30,29,.14), 0 0 0 2px #1F1E1D; opacity: 0; }
+.ubtn .on { position: absolute; inset: 0; border-radius: 60px; display: flex; align-items: center; justify-content: center; gap: 20px; opacity: 0; }
+.uhint { position: absolute; left: 0; right: 0; top: 340px; text-align: center; font: 700 34px "Montserrat"; color: #73726C; opacity: 0; }
+.fcard { position: absolute; left: 330px; top: 170px; width: 1260px; background: #FFFFFF; border-radius: 22px; box-shadow: 0 30px 80px rgba(31,30,29,.16); overflow: hidden; opacity: 0; }
+.fcard .fh { height: 70px; background: #EFECE4; display: flex; align-items: center; padding: 0 30px; gap: 16px; font: 600 28px "JetBrains Mono", monospace; color: #1F1E1D; }
+.fcard .fl2 { font: 500 32px/1.5 "JetBrains Mono", monospace; color: #1F1E1D; padding: 14px 40px; opacity: 0; }
+.fcard .fl2.new { background: rgba(242,194,0,.16); }
+'''
+
+def k_path(s, t, e, d, I, W, P, R, fx, t0):
+    items = s.get("items") or getattr(_S, "ROAD", [])
+    N = max(len(items), 2)
+    xs_ = [200 + q * (1520 / (N - 1)) for q in range(N)]
+    pts = [(x, 560 + 150 * _math.sin((x - 200) / (1520 / (N - 1)) * _math.pi - _math.pi / 2)) for x in range(120, 1820, 20)]
+    ys_ = [560 + 150 * _math.sin(q * _math.pi - _math.pi / 2) for q in range(N)]
+    h = f'<svg class="pth" width="1920" height="1080"><path d="{_rough(pts, 3, 2)}" fill="none" stroke="#CFCBC0" stroke-width="5" stroke-linecap="round" stroke-dasharray="2 18"/></svg>'
+    act = s.get("act"); mode = s.get("mode", "intro" if act is None else "cb")
+    blur_last = s.get("blur_last", False)
+    if mode == "intro": h += f'<div class="pcover" id="{I("cv")}"></div>'
+    js = []
+    for q in range(N):
+        done = act is not None and q < act
+        cls = "pnode" + (" cur" if q == act else "")
+        ly = ys_[q] + (60 if ys_[q] > 560 else -130)
+        blur = ' style="filter:blur(10px)"' if blur_last and q == N - 1 and (mode == "intro" or (act is not None and act < N - 1) or mode == "recap") else ""
+        h += f'<div class="{cls}" id="{I(f"n{q}")}" style="left:{xs_[q]:.0f}px;top:{ys_[q]:.0f}px"><div class="pfg" id="{I(f"g{q}")}" style="opacity:{1 if done else 0}">&#10003;</div></div>'
+        h += f'<div class="plab{" cur" if q == act else ""}" id="{I(f"l{q}")}" style="left:{xs_[q]:.0f}px;top:{ly:.0f}px"{blur}><b>{q + 1:02d}</b>{H.escape(items[q])}</div>'
+    if mode == "intro":
+        js.append(f'tl.fromTo("#{I("cv")}",{{scaleX:1}},{{scaleX:0,duration:{max(d - .6, 1):.2f},ease:"none"}},{P(t)});')
+        last = t; ats = s.get("ats", [""] * N)
+        for q, wd in enumerate(ats[:N]):
+            at = max(W(wd, last + .4), last + .25) if q and wd else (t + .15 + q * .45); last = at
+            js.append(f'gsap.set(["#{I(f"n{q}")}","#{I(f"l{q}")}"],{{opacity:0}});tl.fromTo(["#{I(f"n{q}")}","#{I(f"l{q}")}"],{{opacity:0,scale:.6}},{{opacity:1,scale:1,duration:.35,ease:"back.out(2)"}},{P(at)});'); fx(at, "pop")
+        if blur_last and s.get("unblur_at"):
+            ub = W(s["unblur_at"], last + .3)
+            js.append(f'tl.to("#{I(f"l{N - 1}")}",{{filter:"blur(0px)",duration:.4}},{P(ub)});'); fx(ub, "ding_sparkle")
+    elif mode == "cb":
+        js.append(f'tl.fromTo("#{I("")} .pth, #{I("")} .pnode, #{I("")} .plab",{{opacity:0}},{{opacity:1,duration:.3}},{P(t)});')
+        js.append(f'tl.fromTo("#{I(f"n{act}")}",{{scale:1}},{{scale:1.5,duration:.4,ease:"back.out(2.5)"}},{P(t + .3)});tl.fromTo("#{I(f"l{act}")}",{{scale:1}},{{scale:1.15,duration:.4,ease:"back.out(2)"}},{P(t + .3)});')
+        if blur_last and act == N - 1: js.append(f'tl.to("#{I(f"l{act}")}",{{filter:"blur(0px)",duration:.4}},{P(t + .3)});'); fx(t + .3, "ding_sparkle")
+        else: fx(t + .3, "whoosh")
+    else:
+        js.append(f'tl.fromTo("#{I("")} .pnode, #{I("")} .plab",{{opacity:0}},{{opacity:1,duration:.3}},{P(t)});')
+        stills = s.get("stills", []); span = max((d - 1.0) / N, .5)
+        for q in range(N):
+            at = t + .4 + q * span; ty = ys_[q] + (-300 if ys_[q] < 560 else 120)
+            if q < len(stills):
+                h += f'<div class="pthumb" id="{I(f"p{q}")}" style="left:{xs_[q]:.0f}px;top:{ty:.0f}px"><img src="assets/{stills[q]}" alt="" /></div>'
+                js.append(f'tl.fromTo("#{I(f"p{q}")}",{{opacity:0,y:20,rotation:-4}},{{opacity:1,y:0,rotation:{(-3 if q % 2 else 3)},duration:.35,ease:"back.out(1.8)"}},{P(at)});')
+            js.append(f'tl.to("#{I(f"g{q}")}",{{opacity:1,duration:.15}},{P(at)});tl.fromTo("#{I(f"n{q}")}",{{scale:1.5}},{{scale:1,duration:.3}},{P(at)});')
+            if blur_last and q == N - 1: js.append(f'tl.to("#{I(f"l{q}")}",{{filter:"blur(0px)",duration:.3}},{P(at)});')
+            fx(at, "pop")
+    return h, js
+
+def k_cards(s, t, e, d, I, W, P, R, fx, t0):
+    items = s["items"]; sm = len(items) > 4; top = s.get("top", 400 if not s.get("title") else 470)
+    h = ""; js = []
+    if s.get("title"):
+        h += f'<div class="ctitle" id="{I("tt")}" style="top:{top - 170}px">{H.escape(s["title"])}</div>'
+        js.append(f'tl.fromTo("#{I("tt")}",{{y:30,opacity:0}},{{y:0,opacity:1,duration:.4,ease:"expo.out"}},{P(t)});')
+    h += f'<div class="cards" style="top:{top}px">'
+    last = t; ats = []
+    for q, it in enumerate(items):
+        wd, ic, tt, sb, st = (list(it) + [None] * 5)[:5]
+        at = (t + .15 if not s.get("title") else t + .5) if q == 0 else max(W(wd, last + .5), last + .3); last = at; ats.append(at)
+        cid = I(f"c{q}"); rot = [-2, 1.5, -1, 2, -1.5, 1, -2][q % 7]
+        sub = f'<div class="cs{" m" if "m" in (st or "") else ""}">{H.escape(sb)}</div>' if sb else ""
+        stamp = f'<svg class="stamp" id="{cid}x" viewBox="0 0 64 64"><g fill="none" stroke="#E5484D" stroke-width="6" stroke-linecap="round">{_LINE_ICONS["x"]}</g></svg>' if st and "x" in st else ""
+        badge = f'<div class="badge" id="{cid}b">&#10003;</div>' if st and "g" in st else ""
+        ic_h = f'<img id="{cid}i" src="assets/{ic[4:]}" alt="" style="width:{74 if sm else 96}px;height:{74 if sm else 96}px;object-fit:contain" />' if ic.startswith("img:") else _line_icon(ic, cid + "i", 74 if sm else 96)
+        h += f'<div class="pc2{" sm" if sm else ""}" id="{cid}" style="transform:rotate({rot}deg)">{ic_h}<div class="ct">{H.escape(tt)}</div>{sub}{stamp}{badge}</div>'
+        js.append(f'tl.fromTo("#{cid}",{{y:40,opacity:0}},{{y:0,opacity:1,duration:.35,ease:"back.out(1.6)"}},{P(at)});')
+        if not ic.startswith("img:"): _draw_on(js, P, "#" + cid + "i", at + .05, .5)
+        if stamp: js.append(f'tl.fromTo("#{cid}x",{{opacity:0,scale:1.6}},{{opacity:.92,scale:1,duration:.25,ease:"back.out(2)"}},{P(at + .5)});tl.to("#{cid}",{{opacity:.55,duration:.3}},{P(at + .6)});')
+        if badge: js.append(f'tl.fromTo("#{cid}b",{{opacity:0,scale:.4}},{{opacity:1,scale:1,duration:.3,ease:"back.out(2.5)"}},{P(at + .45)});')
+        fx(at, "pop")
+    h += "</div>"
+    if s.get("arrows") and len(items) > 1:
+        cw = (210 if sm else 300); gap = 34; n = len(items); x0 = 960 - (n * cw + (n - 1) * gap) / 2
+        svg = '<svg class="carr" width="1920" height="1080">'
+        for q in range(n - 1):
+            xa = x0 + (q + 1) * cw + q * gap - 8; xb = xa + gap + 16; y = top + 130
+            sh_, hd_ = _rarrow(xa, y, xb, y, seed=q + 4, bend=-14)
+            svg += f'<g id="{I(f"a{q}")}"><path d="{sh_}" {_SW.replace("#1F1E1D", "#E8B000")}/><path d="{hd_}" {_SW.replace("#1F1E1D", "#E8B000")}/></g>'
+        h += svg + "</svg>"
+        for q in range(n - 1): _draw_on(js, P, "#" + I(f"a{q}"), ats[q + 1] - .25, .3)
+    return h, js
+
+def k_receipt(s, t, e, d, I, W, P, R, fx, t0):
+    rows = "".join(f'<div class="rl" id="{I(f"r{q}")}"><span>{H.escape(nm)}</span><b>{H.escape(pr)}</b></div>' for q, (wd, nm, pr) in enumerate(s["lines"]))
+    tot = s.get("total", "$0")
+    h = f'<div class="rcpt" id="{I("c")}"><h4>{H.escape(s.get("head", "receipt"))}</h4>{rows}<div class="rtot" id="{I("tot")}"><span>TOTAL</span><span>{H.escape(tot)}</span></div><div class="rstamp" id="{I("st")}">{H.escape(tot)}</div></div>'
+    js = [f'tl.fromTo("#{I("c")}",{{y:-500,opacity:1}},{{y:0,duration:.7,ease:"power2.out"}},{P(t)});']
+    last = t + .5
+    for q, (wd, nm, pr) in enumerate(s["lines"]):
+        at = max(W(wd, last + .4), last + .3); last = at
+        js.append(f'tl.fromTo("#{I(f"r{q}")}",{{opacity:0,x:-20}},{{opacity:1,x:0,duration:.3}},{P(at)});'); fx(at, "typing_short" if q == 0 else "pop")
+    tt_ = W(s["total_at"], last + .3) if s.get("total_at") else last + .4
+    js.append(f'tl.to("#{I("tot")}",{{opacity:1,duration:.3}},{P(tt_)});tl.fromTo("#{I("st")}",{{opacity:0,scale:2.2}},{{opacity:1,scale:1,duration:.3,ease:"back.out(2)"}},{P(tt_ + .2)});'); fx(tt_ + .2, "bass_hit")
+    return h, js
+
+def _logo_inner(lg, fallback):
+    return f'<img src="assets/{lg}" alt="" />' if lg else H.escape(fallback)
+
+def k_workflow(s, t, e, d, I, W, P, R, fx, t0):
+    ln, limg = s.get("left", ("Tool A", None)); rn, rimg = s.get("right", ("Tool B", None))
+    res = s.get("result", "my workflow"); met = s.get("metric", "weekly limit"); clk = s.get("clock_label", "faster")
+    h = (f'<div class="wlogo" id="{I("a")}" style="left:300px;top:200px">{_logo_inner(limg, ln)}</div><div class="lgcap" id="{I("ac")}" style="left:300px;top:460px">{H.escape(ln)}</div>'
+         f'<div class="wlogo" id="{I("b")}" style="left:300px;top:560px">{_logo_inner(rimg, rn)}</div><div class="lgcap" id="{I("bc")}" style="left:300px;top:820px">{H.escape(rn)}</div>'
+         f'<div class="wbox" id="{I("w")}" style="left:900px;top:470px">{H.escape(res)}</div>')
+    a1 = _rarrow(560, 320, 890, 500, 11, 30); a2 = _rarrow(560, 680, 890, 540, 12, -30)
+    h += f'<svg class="carr" width="1920" height="1080"><g id="{I("r1")}"><path d="{a1[0]}" {_SW.replace("#1F1E1D", "#E8B000")}/><path d="{a1[1]}" {_SW.replace("#1F1E1D", "#E8B000")}/></g><g id="{I("r2")}"><path d="{a2[0]}" {_SW.replace("#1F1E1D", "#E8B000")}/><path d="{a2[1]}" {_SW.replace("#1F1E1D", "#E8B000")}/></g></svg>'
+    h += f'<div style="position:absolute;left:1380px;top:250px;opacity:0" id="{I("sw")}">{_line_icon("clock", I("swi"), 150)}<div style="font:800 34px Montserrat;color:#1F1E1D;text-align:center;margin-top:8px">{H.escape(clk)}</div></div>'
+    h += f'<div class="wmeter" id="{I("m")}" style="left:1150px;top:740px"><div class="mt">{H.escape(met)}</div><div class="tr"><div class="fl" id="{I("mf")}"></div></div></div>'
+    aw = W(s["start_at"], t + .1) if s.get("start_at") else t + .2
+    ab = W(s["merge_at"], aw + .4) if s.get("merge_at") else aw + .8
+    fa = W(s["fast_at"], ab + .5) if s.get("fast_at") else ab + 1.1
+    la = W(s["meter_at"], fa + .4) if s.get("meter_at") else fa + .8
+    js = [f'tl.fromTo(["#{I("a")}","#{I("ac")}"],{{x:-60,opacity:0}},{{x:0,opacity:1,duration:.4,ease:"expo.out"}},{P(aw)});tl.fromTo(["#{I("b")}","#{I("bc")}"],{{x:-60,opacity:0}},{{x:0,opacity:1,duration:.4,ease:"expo.out"}},{P(aw + .25)});']
+    fx(aw, "pop")
+    _draw_on(js, P, "#" + I("r1"), ab - .1, .4); _draw_on(js, P, "#" + I("r2"), ab + .05, .4)
+    js.append(f'tl.fromTo("#{I("w")}",{{scale:.7,opacity:0}},{{scale:1,opacity:1,duration:.4,ease:"back.out(2)"}},{P(ab + .35)});'); fx(ab + .35, "pop")
+    js.append(f'tl.fromTo("#{I("sw")}",{{y:30,opacity:0}},{{y:0,opacity:1,duration:.35,ease:"back.out(2)"}},{P(fa)});'); _draw_on(js, P, "#" + I("swi"), fa + .05, .5)
+    js.append(f'tl.fromTo("#{I("swi")}",{{rotation:0}},{{rotation:360,duration:1.2,ease:"power2.inOut",transformOrigin:"50% 55%"}},{P(fa + .4)});'); fx(fa, "pop")
+    js.append(f'tl.fromTo("#{I("m")}",{{y:30,opacity:0}},{{y:0,opacity:1,duration:.35,ease:"expo.out"}},{P(la)});tl.to("#{I("mf")}",{{scaleX:.18,duration:.8,ease:"power2.out"}},{P(la + .2)});'); fx(la, "pop")
+    return h, js
+
+def k_hfskill(s, t, e, d, I, W, P, R, fx, t0):
+    an, aimg = s.get("app", ("App", None)); tn = s.get("target", "engine"); sk = s.get("skill", "skill folder")
+    h = (f'<div class="wlogo" id="{I("a")}" style="left:360px;top:380px">{_logo_inner(aimg, an)}</div><div class="lgcap" id="{I("ac")}" style="left:360px;top:640px">{H.escape(an)}</div>'
+         f'<div class="qmark" id="{I("q")}" style="left:860px;top:380px">?</div>'
+         f'<div class="wlogo" id="{I("b")}" style="left:1280px;top:380px;flex-direction:column">&lt;/&gt;<span style="font:700 28px JetBrains Mono, monospace;margin-top:8px">{H.escape(tn)}</span></div>'
+         f'<div class="wfold" id="{I("f")}" style="left:770px;top:760px">{_line_icon("folder", I("fi"), 64)}{H.escape(sk)}</div>')
+    ta = W(s["target_at"], t + .4) if s.get("target_at") else t + .7
+    qa = W(s["q_at"], ta + .2) if s.get("q_at") else ta + .5
+    fa = W(s["skill_at"], qa + .5) if s.get("skill_at") else qa + 1.0
+    js = [f'tl.fromTo(["#{I("a")}","#{I("ac")}"],{{y:40,opacity:0}},{{y:0,opacity:1,duration:.4,ease:"expo.out"}},{P(t + .1)});tl.fromTo("#{I("b")}",{{y:40,opacity:0}},{{y:0,opacity:1,duration:.4,ease:"expo.out"}},{P(ta)});',
+          f'tl.fromTo("#{I("q")}",{{opacity:0,scale:.4,rotation:-20}},{{opacity:1,scale:1,rotation:0,duration:.35,ease:"back.out(2.5)"}},{P(qa)});']
+    fx(qa, "pop")
+    js.append(f'tl.fromTo("#{I("f")}",{{y:120,opacity:0}},{{y:0,opacity:1,duration:.45,ease:"back.out(1.6)"}},{P(fa)});tl.to("#{I("q")}",{{opacity:0,scale:.5,duration:.25}},{P(fa + .3)});')
+    _draw_on(js, P, "#" + I("fi"), fa + .05, .4)
+    js.append(f'tl.to("#{I("a")}",{{boxShadow:"0 0 0 8px #F2C200, 0 30px 80px rgba(242,194,0,.45)",duration:.35}},{P(fa + .5)});'); fx(fa, "whoosh"); fx(fa + .5, "ding_sparkle")
+    return h, js
+
+def k_tracks(s, t, e, d, I, W, P, R, fx, t0):
+    rows = s["rows"]; h = ""; js = []
+    for q, (nm, keys) in enumerate(rows):
+        y = 260 + q * 130
+        h += f'<div class="trk" style="top:{y}px"><div class="tn">{H.escape(nm)}</div><div class="tline"></div>'
+        for r, (wd, x, lab, gold) in enumerate(keys):
+            kid = I(f"k{q}_{r}")
+            h += f'<div class="kf{" g" if gold else ""}" id="{kid}" style="left:{240 + x}px"></div><div class="kfl" id="{kid}l" style="left:{240 + x}px">{H.escape(lab)}</div>'
+            at = W(wd, t + .2 + q * .4 + r * .2) if wd else (t + .3 + q * .4 + r * .2)
+            js.append(f'tl.fromTo(["#{kid}","#{kid}l"],{{opacity:0,scale:.3}},{{opacity:1,scale:1,duration:.3,ease:"back.out(2.5)"}},{P(at)});')
+            if r == 0: fx(at, "pop")
+        h += "</div>"
+        js.append(f'tl.fromTo("#{I("")} .trk:nth-of-type({q + 1})",{{opacity:0,x:-30}},{{opacity:1,x:0,duration:.35}},{P(t + q * .12)});')
+    h += f'<div class="phead" id="{I("ph")}" style="left:480px"></div>'
+    js.append(f'tl.fromTo("#{I("ph")}",{{x:0}},{{x:1180,duration:{max(d - .3, 1):.2f},ease:"none"}},{P(t + .2)});')
+    return h, js
+
+def k_filmstrip(s, t, e, d, I, W, P, R, fx, t0):
+    h = ""; js = []
+    for q in range(5):
+        h += f'<div class="fstrip" id="{I(f"f{q}")}" style="left:{140 + q * 60}px;top:{340 + q * 18}px">frame {q + 1}</div>'
+        js.append(f'tl.fromTo("#{I(f"f{q}")}",{{opacity:0,x:-80}},{{opacity:1,x:0,duration:.25,ease:"expo.out"}},{P(t + .15 + q * .25)});')
+    out_lab = s.get("label", "MP4")
+    h += f'<div class="mp4" id="{I("m")}">{_line_icon("play", I("mi"), 260)}<div style="font:900 56px Montserrat;color:#1F1E1D;text-align:center">{H.escape(out_lab)}</div></div>'
+    a1 = _rarrow(720, 470, 1380, 470, 21, -40)
+    h += f'<svg class="carr" width="1920" height="1080"><g id="{I("ar")}"><path d="{a1[0]}" {_SW.replace("#1F1E1D", "#E8B000")}/><path d="{a1[1]}" {_SW.replace("#1F1E1D", "#E8B000")}/></g></svg>'
+    ma = W(s["out_at"], t + 1.0) if s.get("out_at") else t + 1.6
+    _draw_on(js, P, "#" + I("ar"), ma - .4, .4)
+    js.append(f'tl.fromTo("#{I("m")}",{{opacity:0,scale:.7}},{{opacity:1,scale:1,duration:.4,ease:"back.out(2)"}},{P(ma)});'); _draw_on(js, P, "#" + I("mi"), ma + .05, .5); fx(ma, "pop")
+    if s.get("sub"):
+        ca = W(s["sub_at"], ma + .4) if s.get("sub_at") else ma + .6
+        h += f'<div class="lgcap" id="{I("pc")}" style="left:1390px;top:690px;opacity:0">{H.escape(s["sub"])}</div>'
+        js.append(f'tl.to("#{I("pc")}",{{opacity:1,duration:.3}},{P(ca)});')
+    return h, js
+
+def k_webvideo(s, t, e, d, I, W, P, R, fx, t0):
+    bx = _rough([(520, 260), (1400, 260), (1400, 800), (520, 800), (520, 260)], 31, 2.5)
+    tb = _rough([(520, 320), (1400, 320)], 32, 1.5); pb = _rough([(600, 740), (1320, 740)], 33, 1.5)
+    top_l = s.get("top", "a webpage"); bot_l = s.get("bottom", "that plays like a video")
+    h = (f'<svg class="carr" width="1920" height="1080"><g id="{I("b")}"><path d="{bx}" {_SW}/><path d="{tb}" {_SW}/></g>'
+         f'<g id="{I("p")}" transform="translate(895 470) scale(2.2)"><g {_SW}>{_LINE_ICONS["play"]}</g></g><path id="{I("pg")}" d="{pb}" fill="none" stroke="#E8B000" stroke-width="10" stroke-linecap="round"/></svg>'
+         f'<div class="lgcap" id="{I("l1")}" style="left:720px;top:180px;width:480px;margin-left:0">{H.escape(top_l)}</div><div class="lgcap" id="{I("l2")}" style="left:720px;top:830px;width:480px;margin-left:0">{H.escape(bot_l)}</div>')
+    js = []
+    _draw_on(js, P, "#" + I("b"), t + .05, .6)
+    js.append(f'tl.to("#{I("l1")}",{{opacity:1,duration:.3}},{P(t + .2)});')
+    pa = W(s["play_at"], t + .6) if s.get("play_at") else t + 1.0
+    _draw_on(js, P, "#" + I("p"), pa - .1, .4)
+    js.append(f'gsap.set("#{I("pg")}",{{strokeDasharray:800,strokeDashoffset:800}});tl.to("#{I("pg")}",{{strokeDashoffset:0,duration:{max(e - pa - .2, .6):.2f},ease:"none"}},{P(pa + .2)});tl.to("#{I("l2")}",{{opacity:1,duration:.3}},{P(pa)});'); fx(pa - .1, "pop")
+    return h, js
+
+def k_compare(s, t, e, d, I, W, P, R, fx, t0):
+    L = s.get("left", ("Option A", None, [])); R_ = s.get("right", ("Option B", None, []))
+    if len(L) == 2: L = (L[0], None, L[1])
+    if len(R_) == 2: R_ = (R_[0], None, R_[1])
+    cols = [("L", 140, L[0], L[1], L[2]), ("R", 1020, R_[0], R_[1], R_[2])]
+    h = ""; js = []
+    for sd, x, nm, lg, rows in cols:
+        hl = s.get("hl") == sd
+        img_h = f'<img src="assets/{lg}" alt="" />' if lg else ""
+        h += f'<div class="cmp" id="{I("c" + sd)}" style="left:{x}px{";box-shadow:0 0 0 6px #F2C200, 0 30px 80px rgba(242,194,0,.25)" if hl else ""}"><div class="ch">{img_h}{H.escape(nm)}</div>'
+        for q, (wd, txt) in enumerate(rows):
+            h += f'<div class="cr" id="{I(f"r{sd}{q}")}"><span>&#10003;</span>{H.escape(txt)}</div>'
+        h += "</div>"
+    js.append(f'tl.fromTo(["#{I("cL")}","#{I("cR")}"],{{y:40,opacity:0}},{{y:0,opacity:1,duration:.4,ease:"expo.out",stagger:.12}},{P(t)});')
+    for sd, x, nm, lg, rows in cols:
+        last = t + .3
+        for q, (wd, txt) in enumerate(rows):
+            rid = I(f"r{sd}{q}")
+            if not s.get("hl") or sd == s.get("hl"):
+                at = max(W(wd, last + .4), last + .25) if wd else last + .35; last = at
+                js.append(f'tl.fromTo("#{rid}",{{opacity:0,x:-20}},{{opacity:1,x:0,duration:.3}},{P(at)});'); fx(at, "pop")
+            elif sd in s.get("show", []):
+                js.append(f'gsap.set("#{rid}",{{opacity:1}});')
+    if s.get("hl"):
+        js.append(f'tl.fromTo("#{I("c" + s["hl"])}",{{scale:1}},{{scale:1.04,duration:.4,ease:"back.out(2)"}},{P(t + .1)});')
+    return h, js
+
+def k_subscribe(s, t, e, d, I, W, P, R, fx, t0):
+    hint = s.get("hint", "if this is helping you...")
+    h = (f'<div class="uhint" id="{I("hn")}">{H.escape(hint)}</div><div class="ui2">'
+         f'<div class="ubtn" id="{I("lk")}">{_line_icon("heart", I("lki"), 60)}Like<div class="on" id="{I("lko")}" style="background:#F2C200">{_line_icon("heart", I("lkj"), 60)}Liked</div></div>'
+         f'<div class="ubtn" id="{I("sb")}">Subscribe<div class="on" id="{I("sbo")}" style="background:#1F1E1D;color:#F5F4EE">Subscribed &#10003;</div></div></div>'
+         f'<div class="cur" id="{I("cu")}" style="left:0;top:0;opacity:0">{_CUR}</div>')
+    js = [f'tl.to("#{I("hn")}",{{opacity:1,duration:.3}},{P(t + .05)});tl.fromTo(["#{I("lk")}","#{I("sb")}"],{{y:30,opacity:0}},{{y:0,opacity:1,duration:.35,ease:"back.out(1.8)",stagger:.12}},{P(t + .2)});']
+    sa = W(s["sub_at"], t + .8) if s.get("sub_at") else t + 1.5
+    js.append(f'tl.fromTo("#{I("cu")}",{{opacity:0,x:1500,y:1000}},{{opacity:1,x:830,y:520,duration:.5,ease:"power2.inOut"}},{P(sa - .9)});tl.to("#{I("cu")}",{{scale:.85,duration:.08,yoyo:true,repeat:1}},{P(sa - .4)});tl.to("#{I("lko")}",{{opacity:1,duration:.15}},{P(sa - .35)});')
+    js.append(f'tl.to("#{I("cu")}",{{x:1170,y:520,duration:.35,ease:"power2.inOut"}},{P(sa - .2)});tl.to("#{I("cu")}",{{scale:.85,duration:.08,yoyo:true,repeat:1}},{P(sa + .2)});tl.to("#{I("sbo")}",{{opacity:1,duration:.15}},{P(sa + .25)});')
+    fx(sa - .4, "click_toggle"); fx(sa + .2, "click_toggle")
+    return h, js
+
+def k_filecard(s, t, e, d, I, W, P, R, fx, t0):
+    rows = "".join(f'<div class="fl2{" new" if n_ else ""}" id="{I(f"l{q}")}">{H.escape(x)}</div>' for q, (wd, x, n_) in enumerate(s["lines"]))
+    h = f'<div class="fcard" id="{I("c")}"><div class="fh">{_line_icon("file", I("fi"), 40)}{H.escape(s["title"])}</div>{rows}<div style="height:24px"></div></div>'
+    js = [f'tl.fromTo("#{I("c")}",{{y:50,opacity:0}},{{y:0,opacity:1,duration:.4,ease:"expo.out"}},{P(t)});']
+    last = t + .3
+    for q, (wd, x, n_) in enumerate(s["lines"]):
+        at = max(W(wd, last + .4), last + .3) if (n_ and wd) else (t + .3 + q * .15); last = max(last, at)
+        js.append(f'tl.fromTo("#{I(f"l{q}")}",{{opacity:0,x:-20}},{{opacity:1,x:0,duration:.3}},{P(at)});')
+        if n_: fx(at, "typing_short")
+    return h, js
+
+NEW.update({
+    "path": k_path, "cards": k_cards, "receipt": k_receipt, "workflow": k_workflow,
+    "hfskill": k_hfskill, "skillconnect": k_hfskill, "tracks": k_tracks, "filmstrip": k_filmstrip,
+    "webvideo": k_webvideo, "compare": k_compare, "subscribe": k_subscribe, "filecard": k_filecard,
+})

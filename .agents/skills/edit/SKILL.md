@@ -5,7 +5,7 @@ description: Edit a long YouTube video (or a reel) in code from the creator's vo
 
 # Edit a video
 
-Engine: [HyperFrames](https://github.com/heygen-com/hyperframes) (HTML → MP4, run with `npx hyperframes`). The kit in `tools/edit_kit/` writes the HyperFrames project; you never hand-write the HTML. HyperFrames and its own skills are installed by the creator from the source ([github.com/heygen-com/hyperframes](https://github.com/heygen-com/hyperframes)); this kit never installs them. If `npx hyperframes` or its skills are missing, stop and send the creator to that link. With earshot installed, use it to pick sound effects and check the final mix.
+Engine: [HyperFrames](https://github.com/heygen-com/hyperframes) (HTML → MP4, run with `npx hyperframes`). The kit in `tools/edit_kit/` writes the HyperFrames project by default; only invent a new custom motion graphic (as a new kind in `tools/edit_kit/kinds.py`, using `theme.py` tokens) when the existing kinds in `KINDS.md` genuinely don't fit the beat. HyperFrames and its own skills are installed by the creator from the source ([github.com/heygen-com/hyperframes](https://github.com/heygen-com/hyperframes)); this kit never installs them. If `npx hyperframes` or its skills are missing, stop and send the creator to that link. With earshot installed, use it to pick sound effects and check the final mix.
 
 ## Before anything
 1. **Design system check.** If `brand/design.json` doesn't exist, first look for a brand they already made elsewhere in the project (the "find a brand they already made" steps in the `design-system` skill). If one is found, import it and carry on with the edit; never ask them to do the grill again. Only if nothing is found, stop and suggest it before editing: *"You don't have a design system yet, so this edit would use the kit's neutral default look (off-white, black text, one blue accent). Want to build yours first? It takes about 10 minutes and every video after uses it."* Then:
@@ -14,7 +14,7 @@ Engine: [HyperFrames](https://github.com/heygen-com/hyperframes) (HTML → MP4, 
    With a design system, every colour and font comes from it.
    Check `sfx/` has a file for each sound the shots use; if some are missing, tell the creator before building (the edit would have no sound there).
 2. Read the script and ask what's unclear (which screen a line means, which file, what text). Never guess: ask with options.
-3. Gather the assets with the creator: screenshots and screen recordings of the real thing they talk about, b-roll, GIFs, logos. If a folder has nothing fitting, say what to search for or record. Only use files they have the rights to.
+3. **Ask about GIFs & b-roll:** Explicitly ask the creator if they want to add GIFs or b-roll for punchlines and mood. Either let them drop their own files in `assets/`, or offer to find/fetch royalty-free clips (only with their go-ahead, and only media they have the rights to). Gather all remaining assets with them (screenshots, screen recordings, logos).
 
 ## Steps
 1. `python tools/edit_kit/new_video.py videos/<name>` → put the voiceover in `audio/voice.mp3`, files in `assets/`.
@@ -33,7 +33,7 @@ Engine: [HyperFrames](https://github.com/heygen-com/hyperframes) (HTML → MP4, 
 **Pace and structure**
 - Something new on screen every 2-3 s. No dead time, no shot over ~4.5 s unless it's a screen recording that shows an action.
 - Show the first real result or payoff by ~0:15. Keep drawn explainer scenes short (under ~3 s) and hand over to real visuals or recordings.
-- Don't repeat the same block (e.g. text chips) line after line; vary per beat. No chip-only screens on an empty background.
+- Don't repeat the same block or motion graphic multiple times in a video (e.g. text chips, the same chart, or the same diagram layout). Vary per beat, and only repeat a graphic when it's necessary to track progress (like a step-by-step map or roadmap). No chip-only screens on an empty background.
 - A new beat in the voice gets a new visual. Reveals wait for the voice: every graphic lands on its word (the kit snaps to word onsets).
 - Visuals are literal: show the exact thing the line says (the real page, the real app, the real number). Only real names, dates and numbers on screen.
 - On-screen text uses the creator's exact script words, never a paraphrase. Big-word screens are rare (3-4 per video).

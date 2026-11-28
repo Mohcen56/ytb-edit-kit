@@ -72,5 +72,31 @@ Options named `..._at`, and the last item of a tuple, are cue words inside that 
   - `YT_HYPE = [("thumbs/a.jpg", "Title", "Channel", "1.2M views"), ...]` (copy the shape from build output if unsure)
   - `dict(at="everyone is posting", kind="ytwall", set="hype")`
 
+## Roadmap, cards, and motion graphics
+- **path**: wavy dotted roadmap with numbered nodes, checkmarks on callback, and optional recap thumbnails. Define `ROAD = ["step 1", "step 2", ...]` in shots.py (or pass `items=[...]`).
+  - Intro: `dict(at="here is the plan", kind="path", mode="intro", ats=["brand", "research", "edit"])` (optional: `blur_last=True, unblur_at="custom"`).
+  - Callback on step `n`: `dict(at="next up", kind="path", act=1)` (marks earlier steps done and highlights step 1).
+  - Recap: `dict(at="let's recap", kind="path", mode="recap", stills=["still1.jpg", "still2.jpg"])`.
+- **cards**: tilted icon cards with optional checkmark (`"g"`) or cross (`"x"`) badges and hand-drawn arrows (`arrows=True`).
+  - `dict(at="three things matter", kind="cards", title="THE SETUP", arrows=True, items=[("hook", "wand", "Hook", "first 15s", "g"), ("pace", "clock", "Pace", "every 2-3s", "g")])`
+- **compare**: two-column comparison cards with animated checkmarks and winner highlight (`hl="L"` or `"R"`).
+  - `dict(at="here is how they compare", kind="compare", hl="L", left=("Tool A", "logos/a.png", [("fast", "runs locally"), ("free", "open source")]), right=("Tool B", "logos/b.png", [("cloud", "needs subscription")]))`
+- **receipt**: paper receipt with line items that appear on their words + big total stamp.
+  - `dict(at="what does this cost", kind="receipt", head="what it costs", total="$0", total_at="free", lines=[("editing", "Editor", "$0"), ("music", "Music", "$0")])`
+- **workflow**: two tools combining with hand-drawn arrows into one workflow box + spinning clock + meter.
+  - `dict(at="my workflow combines both", kind="workflow", left=("Tool A", "logos/a.png"), right=("Tool B", "logos/b.png"), result="my workflow", start_at="combines", merge_at="both", fast_at="faster", meter_at="limit")`
+- **hfskill** (or **skillconnect**): connects an app to a target/engine via a sliding skill folder.
+  - `dict(at="how it connects", kind="hfskill", app=("My App", "logos/app.png"), target="render engine", skill="edit skill", target_at="engine", q_at="know", skill_at="skill")`
+- **tracks**: multi-track timeline with keyframes (`(word, x_px, label, is_gold)`) and a moving playhead.
+  - `dict(at="every layer is timed", kind="tracks", rows=[("picture", [("picture", 220, "0:01", True)]), ("sound", [("sound", 480, "0:03", False)])])`
+- **filmstrip**: stacked frames turning via hand-drawn arrow into an MP4 play icon.
+  - `dict(at="renders frame by frame", kind="filmstrip", label="MP4", sub="on your computer", out_at="MP4", sub_at="computer")`
+- **webvideo**: hand-drawn browser wireframe with play button and progress bar.
+  - `dict(at="think of it like a webpage", kind="webvideo", top="a webpage", bottom="that plays like a video", play_at="plays")`
+- **filecard**: clean file preview card where new lines highlight as they appear: `(word, line_text, is_new)`.
+  - `dict(at="it saves the rule", kind="filecard", title="brand/design.md", lines=[(None, "## Rules", False), ("loop", "2026-11-28: GIFs play once", True)])`
+- **subscribe**: Like and Subscribe pill buttons with an animated cursor clicking both.
+  - `dict(at="if this is helping", kind="subscribe", hint="if this is helping you...", sub_at="subscribe")`
+
 ## Vertical (reels)
 The layouts are made for 16:9 (1920×1080). For reels, check the storyboard and move things where needed.
